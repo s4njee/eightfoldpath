@@ -7,7 +7,7 @@ in the same family as [Fire Temple](https://github.com/s4njee/firetemple) and
 [holofx](https://github.com/s4njee/holofx) collection.
 
 Every effect gets a live demo, readable source, a write-up and a practicality scorecard. The plan
-is in [plan.md](plan.md). Epic 1, the foundation, is in place; the effects start with Epic 3.
+is in [plan.md](plan.md). Epics 1 to 3 are done: the foundation, the research UI and the pixel-art building blocks.
 
 ![hello: one lit sprite on one tile](src/effects/hello/poster.webp)
 

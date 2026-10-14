@@ -89,6 +89,8 @@ export function packTextureArray(
   device: GPUDevice,
   images: readonly Pixels[],
   label = 'pixel art',
+  /** `rgba8unorm-srgb` for colour; `rgba8unorm` for data such as normal maps. */
+  format: 'rgba8unorm-srgb' | 'rgba8unorm' = 'rgba8unorm-srgb',
 ): TextureArray {
   if (images.length === 0) throw new Error('packTextureArray needs at least one image');
   const width = Math.max(...images.map((image) => image.width));
@@ -96,7 +98,7 @@ export function packTextureArray(
   const texture = device.createTexture({
     label,
     size: [width, height, images.length],
-    format: 'rgba8unorm-srgb',
+    format,
     usage: GPUTextureUsage.TEXTURE_BINDING | GPUTextureUsage.COPY_DST,
   });
   const layers = images.map((image, layer) => {
