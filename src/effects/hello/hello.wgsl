@@ -15,6 +15,13 @@ struct Quad {
 const KIND_GROUND = 0.0;
 const KIND_SPRITE = 1.0;
 
+// params.view: what the lit pass writes, for the layer inspector (story 2.2).
+const VIEW_FINAL = 0.0;
+const VIEW_ALBEDO = 1.0;
+const VIEW_LIGHTING = 2.0;
+const VIEW_NORMALS = 3.0;
+const VIEW_DEPTH = 4.0;
+
 @group(0) @binding(0) var<uniform> params: Params;
 @group(0) @binding(1) var pixel_sampler: sampler;
 @group(0) @binding(2) var art: texture_2d_array<f32>;
@@ -73,7 +80,8 @@ fn light_at(world: vec3f) -> vec3f {
 // sprite shadows; it does not move with the light.
 fn contact_shadow(world: vec3f) -> f32 {
   let d = length((world.xz - params.sprite_feet.xz) / vec2f(0.8, 0.5));
-  return mix(params.shadow, 1.0, smoothstep(0.55, 1.0, d));
+  let shadow = mix(params.shadow, 1.0, smoothstep(0.55, 1.0, d));
+  return mix(1.0, shadow, params.shadow_on);
 }
 
 @fragment fn fs_lit(in: Varying) -> @location(0) vec4f {
@@ -85,6 +93,7 @@ fn contact_shadow(world: vec3f) -> f32 {
   }
   let to_light = normalize(params.light_pos - in.world);
   var lit: vec3f;
+  var normal = vec3f(0.0, 1.0, 0.0);
   if (in.kind == KIND_GROUND) {
     let diffuse = max(to_light.y, 0.0);
     let shadow = contact_shadow(in.world);
@@ -93,9 +102,28 @@ fn contact_shadow(world: vec3f) -> f32 {
     // A flat sprite has no real normal. Treat it as facing the camera, tilted up a little, and
     // wrap the falloff so its unlit side is dim rather than black. Story 3.3 does this properly.
     let facing = normalize(vec3f(params.camera_pos.x - in.world.x, 0.0, params.camera_pos.z - in.world.z));
-    let normal = normalize(facing + vec3f(0.0, 0.35, 0.0));
+    normal = normalize(facing + vec3f(0.0, 0.35, 0.0));
     let wrapped = clamp((dot(normal, to_light) + 0.5) / 1.5, 0.0, 1.0);
     lit = params.ambient + light_at(in.world) * wrapped;
+  }
+  if (params.light_on < 0.5) {
+    // Lighting off shows the art as drawn, so the before/after split compares raw pixels with the
+    // lit scene. The contact shadow is its own stage.
+    lit = vec3f(select(1.0, contact_shadow(in.world), in.kind == KIND_GROUND));
+  }
+  if (params.view == VIEW_ALBEDO) {
+    return vec4f(texel.rgb, 1.0);
+  }
+  if (params.view == VIEW_LIGHTING) {
+    return vec4f(lit, 1.0);
+  }
+  if (params.view == VIEW_NORMALS) {
+    return vec4f(normal * 0.5 + 0.5, 1.0);
+  }
+  if (params.view == VIEW_DEPTH) {
+    // Distance from the camera across the scene's depth range, near white and far black.
+    let t = (distance(params.camera_pos, in.world) - params.depth_range.x) / (params.depth_range.y - params.depth_range.x);
+    return vec4f(vec3f(1.0 - clamp(t, 0.0, 1.0)), 1.0);
   }
   return vec4f(texel.rgb * lit, 1.0);
 }

@@ -45,6 +45,18 @@ export interface Scorecard {
   lightPage?: 'yes' | 'underlay' | 'no' | 'untested';
   /** What a site should show where WebGPU is unavailable. */
   fallback: string;
+  /** Draws a 3D scene with a depth buffer, rather than a flat picture. */
+  depth?: boolean;
+  /**
+   * Whether the pixel art holds still when the camera moves at the default settings, checked with
+   * the texel loupe: `stable`, `shimmers` (texels crawl or flicker), or `untested`.
+   */
+  pixelStability?: 'stable' | 'shimmers' | 'untested';
+  /**
+   * Share of drawn pixels that are exactly palette colours on the low-resolution path (story
+   * 3.8), 0..1. Absent for effects without that path.
+   */
+  paletteAdherence?: number;
   useCases: readonly string[];
   /** Gzipped size of the effect's own chunk, in kilobytes. */
   bundleKb?: number;
@@ -91,6 +103,35 @@ export type ParamValue<D extends ParamDef> = D extends { type: 'number' }
 
 export type ParamValues<S extends ParamSchema> = { -readonly [K in keyof S]: ParamValue<S[K]> };
 
+/**
+ * What the layer inspector (story 2.2) can ask an effect to show. An effect lists what it supports;
+ * the shell offers exactly those, so an effect with nothing to inspect leaves this out.
+ */
+export interface InspectSpec {
+  /**
+   * Debug views besides the finished picture, by name, e.g. `albedo`, `normals`, `depth`,
+   * `scene` (before post-processing) or `bloom` (the bloom alone). Shown in this order.
+   */
+  readonly views?: readonly string[];
+  /**
+   * Parts of the picture that can be switched off one at a time, e.g. `bloom`, `shadows`, `fog`.
+   * The before/after split (story 2.3) shows the picture with every one of them off.
+   */
+  readonly stages?: readonly string[];
+}
+
+/** The inspector's live choice. The host mutates it; read it every frame, like `params`. */
+export interface InspectState {
+  /** `final`, or one of the effect's `inspect.views`. */
+  view: string;
+  /** Stages switched off. */
+  off: ReadonlySet<string>;
+}
+
+export function defaultInspect(): InspectState {
+  return { view: 'final', off: new Set() };
+}
+
 export interface EffectContext<S extends ParamSchema = ParamSchema> {
   device: GPUDevice;
   /**
@@ -113,6 +154,11 @@ export interface EffectContext<S extends ParamSchema = ParamSchema> {
    * `timestampWrites: profiler.pass('label')`; it is undefined when timing is unavailable.
    */
   profiler: PassProfiler;
+  /**
+   * The layer inspector's choice, for effects that declare `inspect`. Absent outside the gallery
+   * and in tests; fall back to `defaultInspect()`.
+   */
+  inspect?: InspectState;
 }
 
 export interface EffectInstance {
@@ -139,6 +185,8 @@ export interface EffectModule<S extends ParamSchema = ParamSchema> {
    */
   hdr?: boolean;
   presets?: Readonly<Record<string, Partial<ParamValues<S>>>>;
+  /** Debug views and switchable stages for the layer inspector. */
+  inspect?: InspectSpec;
   create(ctx: EffectContext<S>): Promise<EffectInstance>;
 }
 

@@ -364,3 +364,19 @@ describe('effect write-ups', () => {
     expect(headings(markdown)).toEqual(headings(template));
   });
 });
+
+describe('Eightfold Path scorecard fields', () => {
+  it('describes art size, depth, pixel stability and palette adherence', async () => {
+    const { artText, depthText, pixelStabilityText, paletteText } =
+      await import('../src/shell/scorecard.ts');
+    expect(artText(0)).toBe('None');
+    expect(artText(10_001)).toBe('9.8 kB of images');
+    expect(artText(150 * 1024)).toBe('150 kB of images');
+    expect(depthText(true)).toMatch(/^Yes/);
+    expect(depthText(undefined)).toBe('Not recorded');
+    expect(pixelStabilityText('shimmers')).toMatch(/^Shimmers/);
+    expect(pixelStabilityText(undefined)).toMatch(/^Not checked/);
+    expect(paletteText(0.9876)).toBe('98.8% of drawn pixels are palette colours');
+    expect(paletteText(undefined)).toBe('No low-resolution path');
+  });
+});

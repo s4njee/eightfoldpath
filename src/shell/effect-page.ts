@@ -58,8 +58,9 @@ export function mountEffectPage(container: HTMLElement, shell: ShellContext, id:
   const tabPanel = el('div', 'efp-effect__tabpanel');
   tabPanel.setAttribute('role', 'tabpanel');
   const side = el('aside', 'efp-effect__side');
+  const inspectSlot = el('div', 'efp-effect__inspect');
   const controlsSlot = el('div', 'efp-effect__controls');
-  side.append(intro(meta), controlsSlot);
+  side.append(intro(meta), inspectSlot, controlsSlot);
   main.append(stage, toolbar, tabs, tabPanel);
   root.append(main, side);
   container.append(root);
@@ -124,6 +125,7 @@ export function mountEffectPage(container: HTMLElement, shell: ShellContext, id:
   let hud: Unmount | undefined;
   let tab: { id: TabId; unmount: Unmount } | undefined;
   let controls: Unmount | undefined;
+  let inspector: Unmount | undefined;
   let disposed = false;
 
   function showLayout(query: URLSearchParams) {
@@ -208,6 +210,9 @@ export function mountEffectPage(container: HTMLElement, shell: ShellContext, id:
     controls = lazyMount(controlsSlot, 'controls', async () =>
       (await import('./controls.ts')).mountControls(controlsSlot, mounted),
     );
+    inspector = lazyMount(inspectSlot, 'inspector', async () =>
+      (await import('./inspector.ts')).mountInspector(inspectSlot, mounted, effect.inspect),
+    );
     // A scorecard opened straight from a link mounted before the host existed; give it the host
     // so it can show this device's live reading.
     if (tab?.id === 'scorecard') {
@@ -221,6 +226,7 @@ export function mountEffectPage(container: HTMLElement, shell: ShellContext, id:
     disposed = true;
     stopListening();
     controls?.();
+    inspector?.();
     hud?.();
     tab?.unmount();
     layout?.destroy();

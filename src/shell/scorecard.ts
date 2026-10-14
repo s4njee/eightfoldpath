@@ -1,4 +1,5 @@
 import measured from '../effects/measured.json';
+import { effectAssetBytes } from '../effects/registry.ts';
 import type { EffectMeta, Scorecard, Tier } from '../effects/types.ts';
 import type { PassTiming } from '../gpu/profiler.ts';
 import type { EffectHost, FrameStats } from './host.ts';
@@ -46,6 +47,29 @@ export function formatMs(ms: number): string {
 
 export function formatKb(kb: number | undefined): string {
   return kb === undefined ? NOT_MEASURED : `${kb < 10 ? kb.toFixed(1) : Math.round(kb)} kB gzipped`;
+}
+
+/** Art is shipped as files, not gzipped: PNGs are already compressed. */
+export function artText(bytes: number): string {
+  if (bytes === 0) return 'None';
+  const kb = bytes / 1024;
+  return `${kb < 10 ? kb.toFixed(1) : Math.round(kb)} kB of images`;
+}
+
+export function depthText(depth: boolean | undefined): string {
+  if (depth === undefined) return 'Not recorded';
+  return depth ? 'Yes. A 3D scene with a depth buffer' : 'No. A flat picture';
+}
+
+export function pixelStabilityText(stability: Scorecard['pixelStability']): string {
+  if (stability === 'stable') return 'Stable. Texels hold still when the camera moves';
+  if (stability === 'shimmers') return 'Shimmers. Texels crawl or flicker when the camera moves';
+  return 'Not checked yet. Use the loupe with the camera moving';
+}
+
+export function paletteText(adherence: number | undefined): string {
+  if (adherence === undefined) return 'No low-resolution path';
+  return `${Math.round(adherence * 1000) / 10}% of drawn pixels are palette colours`;
 }
 
 export function computeText(compute: boolean): string {
@@ -256,6 +280,7 @@ export function mountScorecard(
         : ''),
   );
   row(verdict.list, 'Light pages', lightPageText(card.lightPage));
+  row(verdict.list, 'Pixel stability', pixelStabilityText(card.pixelStability));
   row(verdict.list, 'Fallback', card.fallback);
   const uses = el('ul', 'efp-scorecard__uses');
   for (const useCase of card.useCases) uses.append(el('li', '', useCase));
@@ -267,6 +292,9 @@ export function mountScorecard(
   const optional = featureList(card.features?.optional, 'none');
   row(cost.list, 'Required features', required.node);
   row(cost.list, 'Optional features', optional.node);
+  row(cost.list, 'Needs depth', depthText(card.depth));
+  row(cost.list, 'Art', artText(effectAssetBytes(meta.id)));
+  row(cost.list, 'Palette', paletteText(card.paletteAdherence));
   row(
     cost.list,
     'Bundle',

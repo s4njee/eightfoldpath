@@ -60,6 +60,14 @@ const VIEWS = [
   { name: 'cards-dark', query: 'layout=cards&page=dark', width: 1280, height: 900, dpr: 1 },
   { name: 'band-light', query: 'layout=band&page=light', width: 1280, height: 900, dpr: 1 },
   { name: 'backdrop-dark', query: 'layout=backdrop&page=dark', width: 1280, height: 900, dpr: 1 },
+  { name: 'dialogue-dark', query: 'layout=dialogue&page=dark', width: 1280, height: 900, dpr: 1 },
+  {
+    name: 'notification-light',
+    query: 'layout=notification&page=light',
+    width: 1280,
+    height: 900,
+    dpr: 1,
+  },
   { name: 'phone-light', query: 'layout=hero&page=light', width: 390, height: 844, dpr: 2 },
   { name: 'phone-dark', query: 'page=dark', width: 390, height: 844, dpr: 2 },
   // A canvas of exactly 1920 x 1080 device pixels, for a HUD reading comparable with the studies.

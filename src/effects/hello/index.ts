@@ -5,7 +5,7 @@ import { createPixelSampler, loadPixels, packTextureArray } from '../../gpu/asse
 import { createHdrTail, TAIL_PARAMS } from '../../gpu/post/index.ts';
 import { createShader, withChunks } from '../../gpu/shader.ts';
 import { createUniformBuffer, defineUniformStruct } from '../../gpu/uniforms.ts';
-import { defineEffect } from '../types.ts';
+import { defaultInspect, defineEffect } from '../types.ts';
 import shader from './hello.wgsl';
 import { meta } from './meta.ts';
 
@@ -21,7 +21,19 @@ const Params = defineUniformStruct('Params', {
   sprite_feet: 'vec3f',
   shadow: 'f32',
   glow: 'f32',
+  view: 'f32',
+  light_on: 'f32',
+  shadow_on: 'f32',
+  depth_range: 'vec2f',
 });
+
+/** Inspector views drawn by the lit pass, by their code in hello.wgsl. */
+const SHADER_VIEWS: Readonly<Record<string, number>> = {
+  albedo: 1,
+  lighting: 2,
+  normals: 3,
+  depth: 4,
+};
 
 /** World units per texel. One tile is 16 texels (plan.md, "Pixel scale"). */
 const TEXEL = 1 / 16;
@@ -81,6 +93,10 @@ export const effect = defineEffect({
     fov: { type: 'number', default: 25, min: 10, max: 60, step: 0.5, label: 'field of view' },
     ...TAIL_PARAMS,
   },
+  inspect: {
+    views: ['albedo', 'lighting', 'normals', 'depth', 'scene', 'bloom'],
+    stages: ['light', 'shadow', 'glow', 'bloom'],
+  },
   presets: {
     lantern: {
       lightSpeed: 0.25,
@@ -99,7 +115,7 @@ export const effect = defineEffect({
     'top down': { cameraPitch: 70, fov: 30 },
   },
 
-  async create({ device, format, hdr, params, profiler }) {
+  async create({ device, format, hdr, params, profiler, inspect = defaultInspect() }) {
     const tail = createHdrTail(device, { format, hdr, label: 'hello' });
     const [ground, sprite] = await Promise.all([loadPixels(cobblestone), loadPixels(traveller)]);
     const art = packTextureArray(device, [ground, sprite], 'hello art');
@@ -200,6 +216,7 @@ export const effect = defineEffect({
       frame(time, encoder, target) {
         if (!depth) return;
         phase += time.delta * params.lightSpeed;
+        const shaderView = SHADER_VIEWS[inspect.view] ?? 0;
 
         // The camera looks at the middle of the sprite from a fixed pitch, far enough back that
         // the narrow field of view frames the tile: the diorama read of plan.md's camera decision.
@@ -236,6 +253,10 @@ export const effect = defineEffect({
           sprite_feet: [0, 0, 0],
           shadow: params.shadow,
           glow: params.glow,
+          view: shaderView,
+          light_on: inspect.off.has('light') ? 0 : 1,
+          shadow_on: inspect.off.has('shadow') ? 0 : 1,
+          depth_range: [distance - 4, distance + 4],
         });
         uniforms.upload();
 
@@ -247,7 +268,7 @@ export const effect = defineEffect({
               loadOp: 'clear',
               storeOp: 'store',
               // A dark dusk sky behind the diorama, in linear light.
-              clearValue: [0.008, 0.01, 0.025, 1],
+              clearValue: shaderView ? [0, 0, 0, 1] : [0.008, 0.01, 0.025, 1],
             },
           ],
           depthStencilAttachment: {
@@ -261,11 +282,28 @@ export const effect = defineEffect({
         pass.setBindGroup(0, bindGroup);
         pass.setPipeline(lit);
         pass.draw(6, 2, 0, 0);
-        pass.setPipeline(glow);
-        pass.draw(6, 1, 0, 2);
+        if (!shaderView && !inspect.off.has('glow')) {
+          pass.setPipeline(glow);
+          pass.draw(6, 1, 0, 2);
+        }
         pass.end();
 
-        tail.encode(encoder, target, time, params, profiler);
+        // Data views skip bloom and tonemapping, so their values reach the screen unchanged; the
+        // scene and bloom views use the tail's own debug outputs.
+        tail.encode(
+          encoder,
+          target,
+          time,
+          params,
+          profiler,
+          shaderView
+            ? { bloom: false, output: { tonemap: 'none', exposure: 1 } }
+            : inspect.view === 'scene' || inspect.view === 'bloom'
+              ? { output: { view: inspect.view } }
+              : inspect.off.has('bloom')
+                ? { bloom: false }
+                : undefined,
+        );
       },
       destroy() {
         depth?.destroy();

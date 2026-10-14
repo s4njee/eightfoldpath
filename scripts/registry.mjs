@@ -1,7 +1,8 @@
 // Generates src/effects/registry.generated.ts: one static import per effect, replacing the
 // Vite-only `import.meta.glob` registry so each effect is imported alone (M3 story 3.3).
 // Run with `npm run registry`.
-import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { dirname, join, normalize } from 'node:path';
 import { format } from 'prettier';
 
 const dir = 'src/effects';
@@ -36,6 +37,24 @@ lines.push('');
 lines.push('export const loaders: Readonly<Record<string, () => Promise<EffectModule>>> = {');
 for (const id of ids)
   lines.push(`  '${id}': () => import('./${id}/index.ts').then((module) => module.effect),`);
+lines.push('};');
+lines.push('');
+// The art each effect loads: every file under assets/ imported by a module in its directory,
+// counted once (story 2.5, shown on the scorecard).
+const assetImport = /from\s+'([^']*assets\/[^'?]+)(\?[^']*)?'/g;
+lines.push('/** Bytes of art each effect imports from assets/. */');
+lines.push('export const assetBytes: Readonly<Record<string, number>> = {');
+for (const id of ids) {
+  const files = new Set();
+  for (const name of readdirSync(`${dir}/${id}`).filter((file) => file.endsWith('.ts'))) {
+    const source = readFileSync(`${dir}/${id}/${name}`, 'utf8');
+    for (const match of source.matchAll(assetImport)) {
+      files.add(normalize(join(dirname(`${dir}/${id}/${name}`), match[1])));
+    }
+  }
+  const bytes = [...files].reduce((total, file) => total + statSync(file).size, 0);
+  lines.push(`  '${id}': ${bytes},`);
+}
 lines.push('};');
 lines.push('');
 lines.push('export const posters: Readonly<Record<string, string>> = {');

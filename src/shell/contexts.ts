@@ -6,6 +6,9 @@
 // because an emissive effect has to be looked at over both. Everything on them is placeholder
 // and inert (see `chrome`).
 
+import chestUrl from '../../assets/sprites/chest.png?url';
+import bustUrl from '../../assets/ui/traveller-bust.png?url';
+import frameUrl from '../../assets/ui/window-frame.png?url';
 import { OBSTACLE_ATTRIBUTE, OBSTACLE_ROOT_ATTRIBUTE } from '../gpu/dom-rects.ts';
 import './contexts.css';
 
@@ -324,4 +327,80 @@ const backdrop = defineLayout(
   },
 );
 
-export const layouts: readonly ContextLayout[] = [bare, hero, cards, band, backdrop];
+/** A pixel-art image, drawn with square texels at a whole-number scale. */
+function pixelArt(url: string, className: string): HTMLImageElement {
+  const image = el('img', `efp-context__pixel-art ${className}`);
+  image.src = url;
+  image.alt = '';
+  return image;
+}
+
+/**
+ * The effect fills the stage and a game-style dialogue box sits over its lower edge (story 2.6):
+ * the most common way the HD-2D look reaches a web page as an interface element. The window is
+ * the cleaned window frame from assets/ui as a nine-slice border, so it stays crisp at any size.
+ */
+const dialogue = defineLayout(
+  'dialogue',
+  'Dialogue',
+  'effect as a scene with a dialogue box over it',
+  false,
+  (root) => {
+    root.style.setProperty('--efp-window-frame', `url("${frameUrl}")`);
+    const stage = stageElement();
+    stage.classList.add('efp-context__scene');
+    const box = obstacle(el('div', 'efp-context__dialogue efp-context__window'));
+    const text = el('div', 'efp-context__dialogue-text');
+    text.append(
+      el('span', 'efp-context__speaker', 'Traveller'),
+      el(
+        'p',
+        '',
+        'The lantern is still warm. Whoever lit it cannot have gone far. Shall we follow the road ' +
+          'north, or wait here until morning?',
+      ),
+    );
+    box.append(
+      pixelArt(bustUrl, 'efp-context__portrait'),
+      text,
+      el('span', 'efp-context__next', '▼'),
+    );
+    root.append(stage, chrome('efp-context__dialogue-chrome', box));
+    return stage;
+  },
+);
+
+/**
+ * The effect fills the stage and a notification slides in over its corner: a toast or an
+ * achievement, the other place game-style UI turns up on real sites.
+ */
+const notification = defineLayout(
+  'notification',
+  'Notification',
+  'effect as a scene with a notification over its corner',
+  false,
+  (root) => {
+    root.style.setProperty('--efp-window-frame', `url("${frameUrl}")`);
+    const stage = stageElement();
+    stage.classList.add('efp-context__scene');
+    const toast = obstacle(el('div', 'efp-context__toast efp-context__window'));
+    const text = el('div', 'efp-context__toast-text');
+    text.append(
+      el('span', 'efp-context__toast-kicker', 'Treasure found'),
+      el('span', 'efp-context__toast-title', 'An old iron key'),
+    );
+    toast.append(pixelArt(chestUrl, 'efp-context__toast-icon'), text);
+    root.append(stage, chrome('efp-context__toast-chrome', toast));
+    return stage;
+  },
+);
+
+export const layouts: readonly ContextLayout[] = [
+  bare,
+  hero,
+  cards,
+  band,
+  backdrop,
+  dialogue,
+  notification,
+];

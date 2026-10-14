@@ -10,6 +10,7 @@ import {
   defaultParams,
   type EffectInstance,
   type EffectModule,
+  type InspectState,
   type ParamSchema,
   type ParamValues,
 } from '../effects/types.ts';
@@ -22,7 +23,12 @@ import {
 import type { GpuSession } from '../gpu/device.ts';
 import { showFallback } from '../gpu/fallback.ts';
 import { createFrameLoop } from '../gpu/loop.ts';
-import { createGpuProfiler, type GpuProfiler, type PassTiming } from '../gpu/profiler.ts';
+import {
+  createGpuProfiler,
+  type GpuProfiler,
+  type PassProfiler,
+  type PassTiming,
+} from '../gpu/profiler.ts';
 import { trackTextureMemory } from '../gpu/texture-memory.ts';
 import { getIntensity, observeMotionEligibility, onMotionChange } from '../shell/motion.ts';
 
@@ -46,6 +52,8 @@ export interface EffectHostOptions {
   resolutionScale?: number;
   /** Let an effect that asks for an HDR canvas have one. Off by default. */
   allowHdr?: boolean;
+  /** The layer inspector's starting choice (story 2.2). */
+  inspect?: { view?: string; off?: Iterable<string> };
 }
 
 export interface LoadedEffect {
@@ -75,6 +83,19 @@ export interface EffectHost {
   onLoad(listener: (loaded: LoadedEffect) => void): () => void;
   onStats(listener: (stats: FrameStats) => void): () => void;
   requestTiming(): () => void;
+  /** Fires after every drawn frame, e.g. to copy the canvas into a magnifier. */
+  onFrame(listener: () => void): () => void;
+  /** The layer inspector's live choice, as the effect sees it. */
+  readonly inspect: InspectState;
+  setInspect(next: { view?: string; off?: Iterable<string> }): void;
+  /**
+   * Before/after split (story 2.3): the part of the canvas left of `position` (0..1) shows the
+   * picture with every inspector stage off. Undefined turns it off. It draws the frame twice.
+   */
+  readonly split: number | undefined;
+  setSplit(position: number | undefined): void;
+  /** Draw one frame now, even while paused, e.g. after an inspector change. */
+  redraw(): void;
   pause(): void;
   resume(): void;
   setResolutionScale(scale: number): void;
@@ -119,6 +140,20 @@ export function createEffectHost(
 
   const loadListeners = new Set<(loaded: LoadedEffect) => void>();
   const statsListeners = new Set<(stats: FrameStats) => void>();
+  const frameListeners = new Set<() => void>();
+  const inspect: InspectState = {
+    view: options.inspect?.view ?? 'final',
+    off: new Set(options.inspect?.off ?? []),
+  };
+  let split: number | undefined;
+  let before: GPUTexture | undefined;
+  // Effects time their passes through this, so the split's second render can be left out of the
+  // HUD without switching the profiler off (which would throw away the frame's timings).
+  let muted = false;
+  let profilerTarget: PassProfiler | undefined;
+  const passProfiler: PassProfiler = {
+    pass: (passLabel) => (muted ? undefined : profilerTarget?.pass(passLabel)),
+  };
   let mounted: Mounted | undefined;
   let loaded: LoadedEffect | undefined;
   let hideFallback: (() => void) | undefined;
@@ -137,11 +172,22 @@ export function createEffectHost(
     sizer.apply();
     profiler.beginFrame();
     const encoder = device.createCommandEncoder({ label: `${label} frame` });
-    instance.frame(time, encoder, context.getCurrentTexture().createView());
+    const current = context.getCurrentTexture();
+    instance.frame(time, encoder, current.createView());
     profiler.endFrame(encoder);
     device.queue.submit([encoder.finish()]);
     profiler.afterSubmit();
+    // The split's second render goes in its own submission, after this one: effects upload their
+    // uniforms with queue.writeBuffer, which takes effect immediately, so a second frame() encoded
+    // into the same command buffer would overwrite the first one's uniforms before either ran.
+    const stages = loaded?.effect.inspect?.stages ?? [];
+    if (split !== undefined && stages.length > 0) {
+      const second = device.createCommandEncoder({ label: `${label} before` });
+      drawBefore(time, second, current, stages);
+      device.queue.submit([second.finish()]);
+    }
     if (paused || suspended) loop.stop();
+    for (const listener of [...frameListeners]) listener();
 
     if (statsListeners.size === 0) return;
     const stats: FrameStats = {
@@ -155,7 +201,49 @@ export function createEffectHost(
     for (const listener of [...statsListeners]) listener(stats);
   });
 
+  /**
+   * Renders the frame again with every stage off and the clock held, then copies the left part
+   * over the canvas. Time does not advance, so an effect's state is not stepped twice.
+   */
+  function drawBefore(
+    time: Parameters<EffectInstance['frame']>[0],
+    encoder: GPUCommandEncoder,
+    current: GPUTexture,
+    stages: readonly string[],
+  ) {
+    const { device, instance } = mounted!;
+    if (!before || before.width !== current.width || before.height !== current.height) {
+      before?.destroy();
+      before = device.createTexture({
+        label: `${label} before`,
+        size: [current.width, current.height],
+        format: current.format,
+        usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.COPY_SRC,
+      });
+    }
+    const chosen = { view: inspect.view, off: inspect.off };
+    inspect.view = 'final';
+    inspect.off = new Set(stages);
+    muted = true;
+    try {
+      instance.frame({ ...time, delta: 0 }, encoder, before.createView());
+    } finally {
+      muted = false;
+      inspect.view = chosen.view;
+      inspect.off = chosen.off;
+    }
+    const width = Math.round(current.width * split!);
+    if (width > 0) {
+      encoder.copyTextureToTexture({ texture: before }, { texture: current }, [
+        Math.min(width, current.width),
+        current.height,
+      ]);
+    }
+  }
+
   function unmount() {
+    before?.destroy();
+    before = undefined;
     mounted?.sizer.disconnect();
     mounted?.instance.destroy();
     mounted?.profiler.destroy();
@@ -199,14 +287,24 @@ export function createEffectHost(
           ? configureCanvasHdr(canvas, device, format)
           : { context: configureCanvas(canvas, device, format), format, hdr: false };
       const { context } = configured;
+      // Reconfigured with COPY_DST so the before/after split can copy into the canvas texture.
+      context.configure({
+        device,
+        format: configured.format,
+        alphaMode: 'premultiplied',
+        usage: GPUTextureUsage.RENDER_ATTACHMENT | GPUTextureUsage.COPY_DST,
+        ...(configured.hdr ? { toneMapping: { mode: 'extended' as const } } : {}),
+      });
       if (mounted && mounted.format !== configured.format) unmount();
+      profilerTarget = profiler;
       const instance = await effect.create({
         device,
         format: configured.format,
         canvas,
         params,
-        profiler,
+        profiler: passProfiler,
         hdr: configured.hdr,
+        inspect,
       });
       built = { context, instance, format: configured.format };
     } catch (error) {
@@ -285,6 +383,28 @@ export function createEffectHost(
       statsListeners.add(listener);
       return () => statsListeners.delete(listener);
     },
+    onFrame(listener) {
+      frameListeners.add(listener);
+      return () => frameListeners.delete(listener);
+    },
+    get inspect() {
+      return inspect;
+    },
+    setInspect(next) {
+      if (next.view !== undefined) inspect.view = next.view;
+      if (next.off !== undefined) inspect.off = new Set(next.off);
+      this.redraw();
+    },
+    get split() {
+      return split;
+    },
+    setSplit(position) {
+      split = position === undefined ? undefined : Math.min(1, Math.max(0, position));
+      this.redraw();
+    },
+    redraw() {
+      if (mounted && !loop.running) loop.start();
+    },
     requestTiming() {
       let released = false;
       timingRequests++;
@@ -316,6 +436,7 @@ export function createEffectHost(
       for (const stop of unsubscribe) stop();
       loadListeners.clear();
       statsListeners.clear();
+      frameListeners.clear();
       loop.stop();
       unmount();
     },

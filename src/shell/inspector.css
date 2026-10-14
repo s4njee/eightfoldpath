@@ -1,0 +1,113 @@
+.efp-inspector {
+  display: flex;
+  flex-direction: column;
+  gap: var(--efp-space-2);
+  padding-bottom: var(--efp-space-4);
+  border-bottom: 1px solid var(--efp-border);
+}
+
+.efp-inspector__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--efp-space-1);
+  font-size: var(--efp-text-s);
+}
+
+.efp-inspector__stages,
+.efp-inspector__tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--efp-space-2);
+}
+
+.efp-inspector > .efp-muted {
+  font-size: var(--efp-text-s);
+}
+
+/* Before/after split: a line at --efp-split with labels either side. Only the handle takes the
+   pointer, so effects that react to the pointer still get it everywhere else. */
+.efp-split {
+  --efp-split: 50%;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.efp-split[hidden] {
+  display: none;
+}
+
+.efp-split::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--efp-split);
+  width: 2px;
+  margin-left: -1px;
+  background: var(--efp-accent);
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.4);
+}
+
+.efp-split__handle {
+  position: absolute;
+  top: 50%;
+  left: var(--efp-split);
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  border: 2px solid var(--efp-on-accent);
+  border-radius: 50%;
+  background: var(--efp-accent);
+  cursor: ew-resize;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.efp-split__handle:focus-visible {
+  outline: 2px solid var(--efp-focus);
+  outline-offset: 2px;
+}
+
+.efp-split__label {
+  position: absolute;
+  top: var(--efp-space-2);
+  padding: 2px var(--efp-space-2);
+  border-radius: var(--efp-radius-s);
+  background: rgb(0 0 0 / 0.55);
+  color: #fff;
+  font: var(--efp-text-xs) / 1.4 var(--efp-font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.efp-split__label--before {
+  right: calc(100% - var(--efp-split) + var(--efp-space-2));
+}
+
+.efp-split__label--after {
+  left: calc(var(--efp-split) + var(--efp-space-2));
+}
+
+/* Texel loupe: follows the pointer, never takes it. */
+.efp-loupe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 176px;
+  height: 176px;
+  border: 2px solid var(--efp-accent);
+  border-radius: var(--efp-radius-m);
+  background: #000;
+  box-shadow: 0 6px 24px rgb(0 0 0 / 0.45);
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+.efp-loupe[hidden] {
+  display: none;
+}
+
+.efp-host--loupe {
+  cursor: crosshair;
+}

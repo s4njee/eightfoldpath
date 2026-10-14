@@ -3,10 +3,10 @@
  * The effects carry the page: chrome stays quiet, flat, and low-contrast against them.
  * Components use these tokens only; no new colours, radii, or font sizes elsewhere.
  *
- * Dark first, inherited from Fire Temple: lit dioramas and emissive effects read best on a dark
- * page. The light theme is real and complete, because a light page is the hard test every overlay
- * effect has to be shown against. Neutrals are warm (charcoal and paper). The accent is the only
- * orange; tier colours stay away from it.
+ * Dark first: lit dioramas and emissive effects read best on a dark page. The dark theme is night
+ * indigo, the light theme parchment, and the accent is lantern gold, the colour of the lights the
+ * effects are built around. The light theme is real and complete, because a light page is the
+ * hard test every overlay effect has to be shown against. Tier colours stay clear of the accent.
  */
 
 :root {
@@ -32,15 +32,15 @@
   --efp-radius-m: 8px;
   --efp-radius-l: 14px;
 
-  --efp-bg: light-dark(#f7f4ef, #0c0a09);
-  --efp-surface: light-dark(#fffdfa, #161210);
-  --efp-surface-2: light-dark(#ede7df, #221b17);
-  --efp-border: light-dark(#dcd2c6, #362b23);
-  --efp-text: light-dark(#1c1511, #f2e9df);
-  --efp-text-muted: light-dark(#6a5b4f, #a99a8b);
-  --efp-accent: light-dark(#ad3a08, #ff8a3d);
-  --efp-on-accent: light-dark(#fffdfa, #1d0c02);
-  --efp-focus: light-dark(#ad3a08, #ffb680);
+  --efp-bg: light-dark(#f4eee1, #0a0c16);
+  --efp-surface: light-dark(#fffaf0, #121527);
+  --efp-surface-2: light-dark(#e9dfca, #1b1f36);
+  --efp-border: light-dark(#d6c8ab, #2b3052);
+  --efp-text: light-dark(#231b10, #ece5d4);
+  --efp-text-muted: light-dark(#685b45, #a29fb8);
+  --efp-accent: light-dark(#875600, #e8b04b);
+  --efp-on-accent: light-dark(#fffaf0, #1a1206);
+  --efp-focus: light-dark(#875600, #f5cf7a);
 
   /* Practicality tiers: A drop-in, B feature, C showpiece. Cool hues, clear of the accent. */
   --efp-tier-a: light-dark(#1f7a4d, #6fd6a0);

@@ -1,9 +1,14 @@
 // One registry over the generated per-effect entries. See scripts/registry.mjs (M3 story 3.3).
 import type { EffectMeta, EffectModule } from './types.ts';
-import { loaders, metas, posters } from './registry.generated.ts';
+import { assetBytes, loaders, metas, posters } from './registry.generated.ts';
 
 export function effectPoster(id: string): string | undefined {
   return posters[id];
+}
+
+/** Bytes of art the effect imports from assets/; 0 for an effect with none. */
+export function effectAssetBytes(id: string): number {
+  return assetBytes[id] ?? 0;
 }
 
 export function listEffects(): EffectMeta[] {

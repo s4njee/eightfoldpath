@@ -28,6 +28,12 @@ export interface EffectHost {
   onLoad(listener: (loaded: LoadedEffect) => void): () => void;
   onStats(listener: (stats: FrameStats) => void): () => void;
   requestTiming(): () => void;
+  onFrame(listener: () => void): () => void;
+  readonly inspect: ReturnType<typeof createEffectHost>['inspect'];
+  setInspect: ReturnType<typeof createEffectHost>['setInspect'];
+  readonly split: number | undefined;
+  setSplit(position: number | undefined): void;
+  redraw(): void;
   pause(): void;
   resume(): void;
   setResolutionScale(scale: number): void;
@@ -73,6 +79,16 @@ export function mountEffect(
     onLoad: (listener) => core.onLoad(listener),
     onStats: (listener) => core.onStats(listener),
     requestTiming: () => core.requestTiming(),
+    onFrame: (listener) => core.onFrame(listener),
+    get inspect() {
+      return core.inspect;
+    },
+    setInspect: (next) => core.setInspect(next),
+    get split() {
+      return core.split;
+    },
+    setSplit: (position) => core.setSplit(position),
+    redraw: () => core.redraw(),
     pause: () => core.pause(),
     resume: () => core.resume(),
     setResolutionScale: (scale) => core.setResolutionScale(scale),

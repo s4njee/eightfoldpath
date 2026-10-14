@@ -307,3 +307,120 @@
     padding: var(--efp-space-4);
   }
 }
+
+/* --- Dialogue and Notification (story 2.6) ------------------------------------------------- */
+
+.efp-context__scene {
+  position: absolute;
+  inset: 0;
+}
+
+.efp-context__pixel-art {
+  image-rendering: pixelated;
+}
+
+/* The cleaned window frame as a nine-slice border: 9 texels of each edge are the frame, drawn at
+   three screen pixels per texel, and the centre stretches as parchment. */
+.efp-context__window {
+  border: 27px solid transparent;
+  border-image: var(--efp-window-frame) 9 fill / 27px / 0 stretch;
+  image-rendering: pixelated;
+  color: #3a2614;
+}
+
+.efp-context__dialogue-chrome,
+.efp-context__toast-chrome {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.efp-context__dialogue {
+  position: absolute;
+  right: var(--efp-space-4);
+  bottom: var(--efp-space-4);
+  left: var(--efp-space-4);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--efp-space-4);
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.efp-context__portrait {
+  flex: none;
+  width: 94px;
+  height: auto;
+  margin: -6px 0;
+}
+
+.efp-context__dialogue-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--efp-space-1);
+  padding-right: var(--efp-space-4);
+  font: var(--efp-text-m) / 1.45 var(--efp-font-sans);
+}
+
+.efp-context__speaker,
+.efp-context__toast-kicker {
+  font: 600 var(--efp-text-s) / 1.2 var(--efp-font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #7a4a1e;
+}
+
+.efp-context__next {
+  position: absolute;
+  right: 0;
+  bottom: -6px;
+  font-size: var(--efp-text-xs);
+  color: #7a4a1e;
+  animation: efp-next 0.9s steps(2, end) infinite;
+}
+
+@keyframes efp-next {
+  50% {
+    transform: translateY(3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .efp-context__next {
+    animation: none;
+  }
+}
+
+.efp-context__toast {
+  position: absolute;
+  top: var(--efp-space-4);
+  right: var(--efp-space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--efp-space-3);
+}
+
+.efp-context__toast-icon {
+  width: 64px;
+  height: auto;
+}
+
+.efp-context__toast-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.efp-context__toast-title {
+  font: 600 var(--efp-text-m) / 1.3 var(--efp-font-sans);
+}
+
+@container efp-context (max-width: 520px) {
+  .efp-context__portrait {
+    width: 47px;
+  }
+
+  .efp-context__dialogue-text {
+    font-size: var(--efp-text-s);
+  }
+}

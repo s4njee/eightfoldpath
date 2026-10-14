@@ -15,6 +15,10 @@ export const meta: EffectMeta = {
     lightPage: 'untested',
     features: { required: [] },
     fallback: 'A still of the sprite on its tile, or a dark CSS gradient.',
+    depth: true,
+    // The camera only moves when a visitor changes its yaw or pitch; nobody has watched that
+    // through the loupe yet. Nearest sampling in perspective is expected to shimmer (story 3.1).
+    pixelStability: 'untested',
     useCases: [
       'Smoke test for asset loading, the sprite and tile path, depth, lighting and the HDR tail',
       'The starting point for the sprite, lighting and diorama stories in Epics 3 and 4',
