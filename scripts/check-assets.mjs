@@ -45,7 +45,13 @@ for (const [file, entry] of Object.entries(manifest.files)) {
   if (!entry.licence) problems.push(`${file}: no licence`);
   if (!file.endsWith('.png')) continue;
 
-  const png = PNG.sync.read(readFileSync(path));
+  // Meshy's AI-generation metadata must survive cleanup (its terms, section 2.4).
+  const bytes = readFileSync(path);
+  if (entry.generator?.tool === 'Meshy' && !bytes.includes('meshy:AIGenerated="true"')) {
+    problems.push(`${file}: Meshy's AI-generation metadata (XMP) is missing`);
+  }
+
+  const png = PNG.sync.read(bytes);
   if (entry.size && (png.width !== entry.size[0] || png.height !== entry.size[1])) {
     problems.push(`${file}: is ${png.width}×${png.height}, manifest says ${entry.size.join('×')}`);
   }

@@ -35,11 +35,39 @@ function readPng(path) {
   return { width: png.width, height: png.height, data: png.data };
 }
 
-function writePng(path, image) {
+// PNG chunks as raw byte ranges: length, type, data and CRC, copied verbatim so the CRC stays valid.
+function pngChunks(bytes) {
+  const chunks = [];
+  for (let at = 8; at < bytes.length; ) {
+    const length = bytes.readUInt32BE(at);
+    chunks.push({ type: bytes.toString('latin1', at + 4, at + 8), bytes: bytes.subarray(at, at + 12 + length) });
+    at += 12 + length;
+  }
+  return chunks;
+}
+
+// Meshy marks every image it generates with an XMP block (meshy:AIGenerated, the model and a content
+// ID), and its terms (section 2.4) do not allow removing or altering AI identifiers in output. Every
+// text chunk of the source therefore goes into the cleaned file unchanged, just after IHDR.
+function withSourceText(encoded, sourcePath) {
+  const text = sourcePath
+    ? pngChunks(readFileSync(sourcePath)).filter((chunk) => ['iTXt', 'tEXt', 'zTXt'].includes(chunk.type))
+    : [];
+  if (!text.length) return encoded;
+  const chunks = pngChunks(encoded);
+  return Buffer.concat([
+    encoded.subarray(0, 8),
+    chunks[0].bytes,
+    ...text.map((chunk) => chunk.bytes),
+    ...chunks.slice(1).map((chunk) => chunk.bytes),
+  ]);
+}
+
+function writePng(path, image, sourcePath) {
   mkdirSync(dirname(path), { recursive: true });
   const png = new PNG({ width: image.width, height: image.height });
   png.data = Buffer.from(image.data);
-  writeFileSync(path, PNG.sync.write(png, { colorType: 6 }));
+  writeFileSync(path, withSourceText(PNG.sync.write(png, { colorType: 6 }), sourcePath));
 }
 
 const at = (img, x, y) => (y * img.width + x) * 4;
@@ -352,7 +380,7 @@ for (const r of results) {
     mkdirSync(dirname(r.out), { recursive: true });
     copyFileSync(r.entry.from, r.out);
   } else {
-    writePng(r.out, r.image);
+    writePng(r.out, r.image, r.entry.from);
   }
   const variant = selected[r.entry.from.replace(/^art\//, '')]?.from;
   const generated = byFile[variant ? `art/${variant}` : r.entry.from];

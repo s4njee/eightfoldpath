@@ -47,9 +47,10 @@ The test art is AI-generated and cleaned up into real pixel art:
 - `npm run assets:clean` detects each image's pixel grid, samples one colour per cell, keys out the
   background, derives a shared 48-colour palette and writes `assets/` with a manifest.
 - `npm run assets:check` (part of `build`) fails on an unlisted file, a wrong size, a colour
-  outside the palette or partial transparency.
+  outside the palette, partial transparency, or a Meshy image that lost its AI-generation metadata.
 
-See [CREDITS.md](CREDITS.md) for the art's licence status, which is not yet confirmed.
+The art was generated on a paid Meshy plan and is MIT licensed with the rest of the repository; Meshy's
+AI-generation metadata is kept in every image. See [CREDITS.md](CREDITS.md).
 
 ## Layout
 

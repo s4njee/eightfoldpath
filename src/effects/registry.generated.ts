@@ -11,7 +11,7 @@ export const loaders: Readonly<Record<string, () => Promise<EffectModule>>> = {
 
 /** Bytes of art each effect imports from assets/. */
 export const assetBytes: Readonly<Record<string, number>> = {
-  hello: 10001,
+  hello: 11743,
 };
 
 export const posters: Readonly<Record<string, string>> = {
