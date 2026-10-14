@@ -38,9 +38,12 @@ function readPng(path) {
 // PNG chunks as raw byte ranges: length, type, data and CRC, copied verbatim so the CRC stays valid.
 function pngChunks(bytes) {
   const chunks = [];
-  for (let at = 8; at < bytes.length; ) {
+  for (let at = 8; at < bytes.length;) {
     const length = bytes.readUInt32BE(at);
-    chunks.push({ type: bytes.toString('latin1', at + 4, at + 8), bytes: bytes.subarray(at, at + 12 + length) });
+    chunks.push({
+      type: bytes.toString('latin1', at + 4, at + 8),
+      bytes: bytes.subarray(at, at + 12 + length),
+    });
     at += 12 + length;
   }
   return chunks;
@@ -51,7 +54,9 @@ function pngChunks(bytes) {
 // text chunk of the source therefore goes into the cleaned file unchanged, just after IHDR.
 function withSourceText(encoded, sourcePath) {
   const text = sourcePath
-    ? pngChunks(readFileSync(sourcePath)).filter((chunk) => ['iTXt', 'tEXt', 'zTXt'].includes(chunk.type))
+    ? pngChunks(readFileSync(sourcePath)).filter((chunk) =>
+        ['iTXt', 'tEXt', 'zTXt'].includes(chunk.type),
+      )
     : [];
   if (!text.length) return encoded;
   const chunks = pngChunks(encoded);
