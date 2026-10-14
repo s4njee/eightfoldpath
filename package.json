@@ -1,0 +1,79 @@
+{
+  "name": "@mk7s/eightfoldpath",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "A research gallery of WebGPU effects in the HD-2D style, with live demos, readable source, notes and practicality scorecards.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/s4njee/eightfoldpath.git"
+  },
+  "homepage": "https://github.com/s4njee/eightfoldpath",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "sideEffects": false,
+  "files": [
+    "lib",
+    "types"
+  ],
+  "exports": {
+    ".": {
+      "types": "./types/lib/index.d.ts",
+      "import": "./lib/index.js"
+    },
+    "./effects/*": {
+      "types": "./types/effects/*/index.d.ts",
+      "import": "./lib/effects/*/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "dev": "vite",
+    "prebuild": "npm run registry",
+    "build": "npm run typecheck && npm run assets:check && vite build && node scripts/check-bundle.mjs",
+    "registry": "node scripts/registry.mjs",
+    "clean:types": "node -e \"require('node:fs').rmSync('types', { recursive: true, force: true })\"",
+    "build:lib": "vite build --config vite.lib.config.ts && npm run clean:types && tsc -p tsconfig.lib.json && node scripts/rewrite-dts.mjs",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json",
+    "lint": "eslint .",
+    "format": "prettier --write --ignore-unknown \"src/**\" \"tests/**\" \"scripts/**\" \"*.{ts,js,json,html}\"",
+    "format:check": "prettier --check --ignore-unknown \"src/**\" \"tests/**\" \"scripts/**\" \"*.{ts,js,json,html}\"",
+    "test": "vitest run",
+    "study": "node scripts/study.mjs",
+    "shot": "node scripts/shot.mjs",
+    "posters": "node scripts/posters.mjs",
+    "browser-check": "node scripts/browser-check.mjs",
+    "catalogue": "node scripts/catalogue.mjs",
+    "assets:check": "node scripts/check-assets.mjs",
+    "assets:clean": "node scripts/clean-art.mjs",
+    "meshy": "node scripts/meshy.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@tweakpane/core": "^2.0.5",
+    "@types/node": "^26.6.4",
+    "@types/pngjs": "^6.0.5",
+    "@webgpu/types": "^0.1.74",
+    "eslint": "^10.12.0",
+    "eslint-config-prettier": "^10.1.8",
+    "pngjs": "^7.0.0",
+    "prettier": "^3.9.9",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.71.1",
+    "vite": "^8.3.3",
+    "vitest": "^5.0.3",
+    "webgpu": "^0.6.2"
+  },
+  "dependencies": {
+    "@mk7s/hologpu-temple-core": "^0.1.1",
+    "marked": "^18.1.0",
+    "shiki": "^4.5.0",
+    "tweakpane": "^4.0.5",
+    "wgpu-matrix": "^3.4.2"
+  }
+}

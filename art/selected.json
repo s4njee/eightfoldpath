@@ -1,0 +1,127 @@
+{
+  "characters/traveller.png": {
+    "from": "characters/traveller-v1.png"
+  },
+  "characters/slime.png": {
+    "from": "characters/slime-v2.png"
+  },
+  "characters/mage.png": {
+    "from": "characters/mage-v2.png"
+  },
+  "characters/knight.png": {
+    "from": "characters/knight-v1.png",
+    "note": "v2 rejected: shield is the Swedish flag"
+  },
+  "characters/slime-bounce.png": {
+    "from": "characters/slime-bounce-v1.png",
+    "note": "cells have lighter magenta backgrounds; motion specks beside frame 3"
+  },
+  "props/lantern.png": {
+    "from": "props/lantern-v2.png",
+    "note": "v1 runs off the bottom edge"
+  },
+  "props/barrel.png": {
+    "from": "props/barrel-v1.png"
+  },
+  "props/tree.png": {
+    "from": "props/tree-v1.png",
+    "note": "v2 is voxel-shaded"
+  },
+  "props/crystals.png": {
+    "from": "props/crystals-v1.png"
+  },
+  "props/chest.png": {
+    "from": "props/chest-v1.png"
+  },
+  "props/boulder.png": {
+    "from": "props/boulder-v2.png"
+  },
+  "tiles/cobblestone.png": {
+    "from": "tiles/cobblestone-v3.png",
+    "note": "not seamless; v1 has seam lines between repeats"
+  },
+  "tiles/grass.png": {
+    "from": "tiles/grass-v1.png",
+    "note": "not seamless; thin dark border to crop"
+  },
+  "tiles/dirt-path.png": {
+    "from": "tiles/dirt-path-v1.png",
+    "note": "not seamless"
+  },
+  "tiles/sand.png": {
+    "from": "tiles/sand-v1.png",
+    "note": "not seamless; v2 has a white border"
+  },
+  "walls/house-front.png": {
+    "from": "walls/house-front-v1.png"
+  },
+  "walls/stone-wall.png": {
+    "from": "walls/stone-wall-v1.png",
+    "note": "thin border to crop; v2 is a 3D block"
+  },
+  "walls/cliff.png": {
+    "from": "walls/cliff-v1.png",
+    "note": "crop the background band above the grass"
+  },
+  "walls/roof.png": {
+    "from": "walls/roof-v2.png",
+    "note": "not seamless"
+  },
+  "cycling/waterfall.png": {
+    "from": "cycling/waterfall-v4.png",
+    "note": "v1-v3 are blocky 3D rock"
+  },
+  "cycling/lava.png": {
+    "from": "cycling/lava-v4.png",
+    "note": "v1-v3 are 3D slabs"
+  },
+  "parallax/sky.png": {
+    "from": "parallax/sky-v1.png",
+    "note": "crop the dark strip along the bottom"
+  },
+  "parallax/mountains.png": {
+    "from": "parallax/mountains-v2.png"
+  },
+  "parallax/hills.png": {
+    "from": "parallax/hills-v1.png"
+  },
+  "parallax/treeline.png": {
+    "from": "parallax/treeline-v2.png"
+  },
+  "parallax/foreground.png": {
+    "from": "parallax/foreground-v1.png"
+  },
+  "illustrations/town.png": {
+    "from": "illustrations/town-v1.png"
+  },
+  "illustrations/forest.png": {
+    "from": "illustrations/forest-v1.png",
+    "note": "v2 has a painted paper border"
+  },
+  "illustrations/harbour.png": {
+    "from": "illustrations/harbour-v1.png"
+  },
+  "vfx/magic-circle.png": {
+    "from": "vfx/magic-circle-v3.png",
+    "note": "v1-v2 used a six-pointed star and rune-like glyphs; prompt changed"
+  },
+  "ui/window-frame.png": {
+    "from": "ui/window-frame-v1.png"
+  },
+  "ui/traveller-bust.png": {
+    "from": "ui/traveller-bust-v2.png",
+    "note": "v1 is voxel-shaded"
+  },
+  "models/town-square.glb": {
+    "from": "models/town-square.glb",
+    "note": "remeshed and textured from a reference image; v1 (no remesh, text texture prompt) rejected: 0.5-1.4M triangles, 18-44 MB, textures not pixel art"
+  },
+  "models/forest-clearing.glb": {
+    "from": "models/forest-clearing.glb",
+    "note": "remeshed and textured from a reference image; v1 (no remesh, text texture prompt) rejected: 0.5-1.4M triangles, 18-44 MB, textures not pixel art"
+  },
+  "models/traveller.glb": {
+    "from": "models/traveller.glb",
+    "note": "remeshed and textured from a reference image; v1 (no remesh, text texture prompt) rejected: 0.5-1.4M triangles, 18-44 MB, textures not pixel art; v1 cloak was orange and black"
+  }
+}

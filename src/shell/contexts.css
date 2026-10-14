@@ -1,0 +1,309 @@
+/*
+ * Mock page layouts. Each page is its own container, so queries follow the stage size
+ * rather than the viewport. Text that sits over the effect always sits on a plate (a
+ * mostly opaque surface), so legibility never depends on what the effect draws.
+ */
+
+.efp-context--bare {
+  height: 100%;
+}
+
+.efp-context__page {
+  position: absolute;
+  inset: 0;
+  container: efp-context / size;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--efp-bg);
+  color: var(--efp-text);
+}
+
+.efp-context__page:focus-visible {
+  outline-offset: -2px;
+}
+
+.efp-context__page .efp-button {
+  cursor: default;
+}
+
+.efp-context__page .efp-button:hover:not(.efp-button--primary) {
+  background: var(--efp-surface);
+}
+
+.efp-context__stage {
+  position: relative;
+  min-width: 0;
+}
+
+.efp-context__plate {
+  padding: var(--efp-space-4);
+  border: 1px solid var(--efp-border);
+  border-radius: var(--efp-radius-m);
+  background: color-mix(in srgb, var(--efp-surface) 90%, transparent);
+}
+
+.efp-context__section-title,
+.efp-context__card-title {
+  font-size: var(--efp-text-l);
+  line-height: 1.25;
+}
+
+.efp-context__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--efp-space-3);
+  padding: var(--efp-space-5);
+}
+
+.efp-context__link,
+.efp-context__nav-link {
+  color: var(--efp-text-muted);
+  font-size: var(--efp-text-s);
+}
+
+/* Hero: the stage is the whole page background. */
+
+.efp-context--hero .efp-context__stage {
+  position: absolute;
+  inset: 0;
+}
+
+.efp-context__hero-chrome {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.efp-context__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--efp-space-4);
+  padding: var(--efp-space-2) var(--efp-space-4);
+  border-bottom: 1px solid var(--efp-border);
+  background: color-mix(in srgb, var(--efp-surface) 90%, transparent);
+}
+
+.efp-context__brand {
+  font-weight: 600;
+}
+
+.efp-context__nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--efp-space-4);
+}
+
+.efp-context__hero-body {
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+  min-height: 0;
+  padding: var(--efp-space-4);
+}
+
+.efp-context__hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--efp-space-3);
+  width: 100%;
+  max-width: 30rem;
+}
+
+.efp-context__headline {
+  font-size: var(--efp-text-xl);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.efp-context__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--efp-space-2);
+  padding-top: var(--efp-space-1);
+}
+
+@container efp-context (max-width: 520px) {
+  .efp-context__nav-link {
+    display: none;
+  }
+
+  .efp-context__headline {
+    font-size: var(--efp-text-l);
+  }
+}
+
+@container efp-context (max-height: 460px) {
+  .efp-context__lede {
+    display: none;
+  }
+}
+
+@container efp-context (min-width: 1000px) {
+  .efp-context__hero-body {
+    padding: var(--efp-space-6);
+  }
+
+  .efp-context__headline {
+    font-size: calc(var(--efp-text-xl) * 1.4);
+  }
+}
+
+/* Cards: the page scrolls; the effect is the backdrop of one card. */
+
+.efp-context--cards,
+.efp-context--band,
+.efp-context--backdrop {
+  overflow: hidden auto;
+}
+
+.efp-context__heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--efp-space-3);
+}
+
+.efp-context__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--efp-space-3);
+}
+
+.efp-context__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--efp-space-2);
+  min-width: 0;
+  padding: var(--efp-space-4);
+}
+
+.efp-context__card-title {
+  font-size: var(--efp-text-m);
+}
+
+.efp-context__card--feature {
+  position: relative;
+  order: -1;
+  justify-content: flex-end;
+  min-height: 15rem;
+  overflow: hidden;
+  padding: 0;
+}
+
+.efp-context__card--feature .efp-context__stage {
+  position: absolute;
+  inset: 0;
+}
+
+.efp-context__card--feature .efp-context__plate {
+  position: relative;
+  margin: var(--efp-space-2);
+}
+
+@container efp-context (min-width: 420px) {
+  .efp-context__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .efp-context__card--feature {
+    grid-column: 1 / -1;
+  }
+}
+
+@container efp-context (min-width: 720px) {
+  .efp-context__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .efp-context__card--feature {
+    order: 0;
+    grid-column: 2;
+    grid-row: span 2;
+  }
+}
+
+/* Band: ordinary sections with the effect as a short band between them. */
+
+.efp-context--band {
+  display: flex;
+  flex-direction: column;
+}
+
+.efp-context--band > * {
+  flex: none;
+}
+
+.efp-context__band {
+  /* No border: a divider effect has to run straight into the section below it. */
+  height: clamp(96px, 28cqh, 200px);
+}
+
+.efp-context__band-below {
+  flex: 1 0 auto;
+  background: var(--efp-surface);
+}
+
+.efp-context__columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(6rem, 1fr));
+  gap: var(--efp-space-4);
+}
+
+.efp-context__column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--efp-space-2);
+}
+
+.efp-context__small {
+  font-size: var(--efp-text-xs);
+}
+
+/* Backdrop: the effect and its veil stay put while the article scrolls over them. */
+
+.efp-context--backdrop {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+}
+
+.efp-context--backdrop > * {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
+.efp-context--backdrop .efp-context__stage,
+.efp-context__veil {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100cqh;
+}
+
+.efp-context__veil {
+  pointer-events: none;
+}
+
+.efp-context__article-chrome {
+  position: relative;
+  padding: var(--efp-space-5);
+  pointer-events: none;
+}
+
+.efp-context__article {
+  margin-inline: auto;
+  padding: var(--efp-space-5);
+  background: color-mix(in srgb, var(--efp-surface) 82%, transparent);
+}
+
+@container efp-context (max-width: 520px) {
+  .efp-context__article-chrome {
+    padding: var(--efp-space-3);
+  }
+
+  .efp-context__article {
+    padding: var(--efp-space-4);
+  }
+}

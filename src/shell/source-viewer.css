@@ -1,0 +1,107 @@
+.efp-source {
+  display: flex;
+  flex-direction: column;
+  gap: var(--efp-space-3);
+  min-width: 0;
+}
+
+.efp-source__bar,
+.efp-source__group,
+.efp-source__caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--efp-space-2);
+}
+
+.efp-source__related {
+  display: flex;
+  flex-direction: column;
+  gap: var(--efp-space-2);
+}
+
+.efp-source__related[hidden] {
+  display: none;
+}
+
+.efp-source__bar {
+  justify-content: space-between;
+  gap: var(--efp-space-3);
+}
+
+.efp-source__caption {
+  justify-content: space-between;
+  min-height: 20px;
+}
+
+.efp-source__caption > p {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.efp-source__status {
+  color: var(--efp-text-muted);
+  font-size: var(--efp-text-xs);
+}
+
+.efp-source__status[data-state='error'] {
+  color: var(--efp-tier-c);
+}
+
+.efp-source__button {
+  /* Rows of file names stay compact on narrow screens. */
+  min-height: 28px;
+  padding: 0 var(--efp-space-3);
+}
+
+/* Code block: shared by the source viewer and fenced blocks in the notes. */
+pre.efp-source__code {
+  margin: 0;
+  padding: var(--efp-space-3) 0;
+  overflow-x: auto;
+  border: 1px solid var(--efp-border);
+  border-radius: var(--efp-radius-m);
+  background: var(--efp-surface);
+  color: var(--efp-text);
+  font-family: var(--efp-font-mono);
+  font-size: var(--efp-text-s);
+  line-height: 1.6;
+  tab-size: 2;
+  counter-reset: efp-line;
+}
+
+pre.efp-source__code code {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  padding: 0;
+  background: none;
+  font: inherit;
+}
+
+.efp-source__line {
+  display: block;
+  padding-right: var(--efp-space-4);
+  white-space: pre;
+  counter-increment: efp-line;
+}
+
+/* The gutter stays put while long lines scroll underneath it. */
+.efp-source__line::before {
+  content: counter(efp-line);
+  display: inline-block;
+  position: sticky;
+  left: 0;
+  min-width: calc(var(--efp-source-digits, 3) * 1ch + var(--efp-space-3) + var(--efp-space-2));
+  margin-right: var(--efp-space-3);
+  padding-left: var(--efp-space-3);
+  padding-right: var(--efp-space-2);
+  background: var(--efp-surface);
+  color: var(--efp-text-muted);
+  text-align: right;
+  user-select: none;
+}
+
+.efp-source__line > span {
+  color: light-dark(var(--shiki-light), var(--shiki-dark));
+}

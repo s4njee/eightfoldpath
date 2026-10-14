@@ -1,0 +1,201 @@
+{
+  "licence": "Generated with Meshy for this repository. Redistribution terms depend on the Meshy plan used and are not yet confirmed; see CREDITS.md.",
+  "assets": [
+    {
+      "from": "art/characters/traveller.png",
+      "to": "sprites/traveller.png",
+      "kind": "sprite"
+    },
+    {
+      "from": "art/characters/slime.png",
+      "to": "sprites/slime.png",
+      "kind": "sprite"
+    },
+    {
+      "from": "art/characters/mage.png",
+      "to": "sprites/mage.png",
+      "kind": "sprite"
+    },
+    {
+      "from": "art/characters/knight.png",
+      "to": "sprites/knight.png",
+      "kind": "sprite"
+    },
+    {
+      "from": "art/characters/slime-bounce.png",
+      "to": "sprites/slime-bounce.png",
+      "kind": "sheet",
+      "note": "Four frames in one row; the generator drew each frame in a lighter magenta cell, which keys out with the background."
+    },
+    {
+      "from": "art/props/lantern.png",
+      "to": "sprites/lantern.png",
+      "kind": "sprite"
+    },
+    {
+      "from": "art/props/barrel.png",
+      "to": "sprites/barrel.png",
+      "kind": "sprite"
+    },
+    {
+      "from": "art/props/tree.png",
+      "to": "sprites/tree.png",
+      "kind": "sprite"
+    },
+    {
+      "from": "art/props/crystals.png",
+      "to": "sprites/crystals.png",
+      "kind": "sprite"
+    },
+    {
+      "from": "art/props/chest.png",
+      "to": "sprites/chest.png",
+      "kind": "sprite"
+    },
+    {
+      "from": "art/props/boulder.png",
+      "to": "sprites/boulder.png",
+      "kind": "sprite"
+    },
+    {
+      "from": "art/tiles/cobblestone.png",
+      "to": "tiles/cobblestone.png",
+      "kind": "tile"
+    },
+    {
+      "from": "art/tiles/grass.png",
+      "to": "tiles/grass.png",
+      "kind": "tile",
+      "crop": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "from": "art/tiles/dirt-path.png",
+      "to": "tiles/dirt-path.png",
+      "kind": "tile"
+    },
+    {
+      "from": "art/tiles/sand.png",
+      "to": "tiles/sand.png",
+      "kind": "tile"
+    },
+    {
+      "from": "art/walls/house-front.png",
+      "to": "walls/house-front.png",
+      "kind": "sprite"
+    },
+    {
+      "from": "art/walls/stone-wall.png",
+      "to": "walls/stone-wall.png",
+      "kind": "tile",
+      "crop": [
+        1,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "from": "art/walls/cliff.png",
+      "to": "walls/cliff.png",
+      "kind": "tile"
+    },
+    {
+      "from": "art/walls/roof.png",
+      "to": "walls/roof.png",
+      "kind": "tile"
+    },
+    {
+      "from": "art/cycling/waterfall.png",
+      "to": "cycling/waterfall.png",
+      "kind": "sprite",
+      "crop": [
+        1,
+        1,
+        1,
+        0
+      ]
+    },
+    {
+      "from": "art/cycling/lava.png",
+      "to": "cycling/lava.png",
+      "kind": "tile"
+    },
+    {
+      "from": "art/parallax/sky.png",
+      "to": "parallax/sky.png",
+      "kind": "layer",
+      "key": false,
+      "crop": [
+        0,
+        0,
+        0,
+        2
+      ]
+    },
+    {
+      "from": "art/parallax/mountains.png",
+      "to": "parallax/mountains.png",
+      "kind": "layer"
+    },
+    {
+      "from": "art/parallax/hills.png",
+      "to": "parallax/hills.png",
+      "kind": "layer"
+    },
+    {
+      "from": "art/parallax/treeline.png",
+      "to": "parallax/treeline.png",
+      "kind": "layer"
+    },
+    {
+      "from": "art/parallax/foreground.png",
+      "to": "parallax/foreground.png",
+      "kind": "layer"
+    },
+    {
+      "from": "art/illustrations/town.png",
+      "to": "illustrations/town.png",
+      "kind": "copy",
+      "note": "Painted, not pixel art: kept at the generator resolution as input for palette mapping and pixelate-hover."
+    },
+    {
+      "from": "art/illustrations/forest.png",
+      "to": "illustrations/forest.png",
+      "kind": "copy",
+      "note": "Painted, not pixel art: kept at the generator resolution as input for palette mapping and pixelate-hover."
+    },
+    {
+      "from": "art/illustrations/harbour.png",
+      "to": "illustrations/harbour.png",
+      "kind": "copy",
+      "note": "Painted, not pixel art: kept at the generator resolution as input for palette mapping and pixelate-hover."
+    },
+    {
+      "from": "art/vfx/magic-circle.png",
+      "to": "vfx/magic-circle.png",
+      "kind": "mask",
+      "note": "White line art on black, collapsed to grey; additive, so not palette-mapped."
+    },
+    {
+      "from": "art/ui/window-frame.png",
+      "to": "ui/window-frame.png",
+      "kind": "sprite"
+    },
+    {
+      "from": "art/ui/traveller-bust.png",
+      "to": "ui/traveller-bust.png",
+      "kind": "sprite"
+    },
+    {
+      "from": "art/models/town-square.glb",
+      "to": "models/town-square.glb",
+      "kind": "copy",
+      "note": "About 30,000 triangles, remeshed by Meshy and textured from art/reference/town-square-texref.png."
+    }
+  ]
+}

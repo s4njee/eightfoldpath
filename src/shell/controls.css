@@ -1,0 +1,132 @@
+.efp-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--efp-space-3);
+  min-width: 0;
+}
+
+.efp-controls__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--efp-space-2);
+}
+
+.efp-controls__actions,
+.efp-controls__group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--efp-space-2);
+}
+
+.efp-controls__presets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--efp-space-2);
+}
+
+.efp-controls__presets:empty {
+  display: none;
+}
+
+.efp-controls__select,
+.efp-controls__link {
+  width: 100%;
+  min-height: 32px;
+  padding: 0 var(--efp-space-2);
+  border: 1px solid var(--efp-border);
+  border-radius: var(--efp-radius-m);
+  background: var(--efp-surface);
+  color: var(--efp-text);
+  font: inherit;
+  font-size: var(--efp-text-s);
+}
+
+.efp-controls__link {
+  text-overflow: ellipsis;
+}
+
+.efp-controls__status {
+  min-height: 1.5em;
+  font-size: var(--efp-text-s);
+}
+
+.efp-controls__status:empty {
+  display: none;
+}
+
+/* Tweakpane, mapped onto the site tokens. Its variables inherit, so setting them on the host
+   themes it in both colour schemes (the tokens resolve per scheme). */
+.efp-controls__pane {
+  --tp-base-background-color: var(--efp-surface);
+  --tp-base-border-radius: var(--efp-radius-l);
+  --tp-base-font-family: var(--efp-font-sans);
+  --tp-base-shadow-color: transparent;
+  --tp-blade-border-radius: var(--efp-radius-s);
+  --tp-blade-horizontal-padding: var(--efp-space-2);
+  --tp-blade-value-width: 62%;
+  --tp-container-horizontal-padding: var(--efp-space-3);
+  --tp-container-vertical-padding: var(--efp-space-2);
+  --tp-container-unit-spacing: var(--efp-space-1);
+  --tp-container-unit-size: 32px;
+  --tp-container-background-color: var(--efp-surface-2);
+  --tp-container-background-color-hover: var(--efp-surface-2);
+  --tp-container-background-color-focus: var(--efp-surface-2);
+  --tp-container-background-color-active: var(--efp-surface-2);
+  --tp-container-foreground-color: var(--efp-text);
+  --tp-label-foreground-color: var(--efp-text-muted);
+  --tp-input-background-color: var(--efp-surface-2);
+  --tp-input-background-color-hover: var(--efp-border);
+  --tp-input-background-color-focus: var(--efp-border);
+  --tp-input-background-color-active: var(--efp-border);
+  --tp-input-foreground-color: var(--efp-text);
+  /* Slider handles use the button colours. */
+  --tp-button-background-color: var(--efp-accent);
+  --tp-button-background-color-hover: var(--efp-accent);
+  --tp-button-background-color-focus: var(--efp-accent);
+  --tp-button-background-color-active: var(--efp-accent);
+  --tp-button-foreground-color: var(--efp-on-accent);
+  --tp-groove-foreground-color: var(--efp-border);
+  --tp-monitor-background-color: var(--efp-surface-2);
+  --tp-monitor-foreground-color: var(--efp-text-muted);
+}
+
+.efp-controls__pane .tp-rotv {
+  width: 100%;
+  border: 1px solid var(--efp-border);
+  box-shadow: none;
+  font-size: var(--efp-text-s);
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.efp-controls__pane .tp-lblv_l {
+  padding-right: var(--efp-space-2);
+}
+
+.efp-controls__pane .tp-txtv_i,
+.efp-controls__pane .tp-sldtxtv_t,
+.efp-controls__pane .tp-lstv_s {
+  font-size: var(--efp-text-s);
+}
+
+.efp-controls__pane .tp-txtv_i,
+.efp-controls__pane .tp-lstv_s {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tweakpane removes outlines and signals focus by background alone. */
+.efp-controls__pane .tp-rotv :focus-visible {
+  outline: 2px solid var(--efp-focus);
+  outline-offset: 1px;
+}
+
+.efp-controls__pane .tp-popv {
+  border: 1px solid var(--efp-border);
+  box-shadow: none;
+}
+
+.efp-controls__pane .tp-rotv_c > .tp-cntv {
+  padding-block: var(--efp-space-2);
+}

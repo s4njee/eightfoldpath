@@ -1,0 +1,253 @@
+/*
+ * Design tokens and the few primitives every shell component shares.
+ * The effects carry the page: chrome stays quiet, flat, and low-contrast against them.
+ * Components use these tokens only; no new colours, radii, or font sizes elsewhere.
+ *
+ * Dark first, inherited from Fire Temple: lit dioramas and emissive effects read best on a dark
+ * page. The light theme is real and complete, because a light page is the hard test every overlay
+ * effect has to be shown against. Neutrals are warm (charcoal and paper). The accent is the only
+ * orange; tier colours stay away from it.
+ */
+
+:root {
+  color-scheme: dark;
+
+  --efp-font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --efp-font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --efp-text-xs: 0.75rem;
+  --efp-text-s: 0.8125rem;
+  --efp-text-m: 0.9375rem;
+  --efp-text-l: 1.25rem;
+  --efp-text-xl: 1.75rem;
+
+  --efp-space-1: 4px;
+  --efp-space-2: 8px;
+  --efp-space-3: 12px;
+  --efp-space-4: 16px;
+  --efp-space-5: 24px;
+  --efp-space-6: 40px;
+
+  --efp-radius-s: 4px;
+  --efp-radius-m: 8px;
+  --efp-radius-l: 14px;
+
+  --efp-bg: light-dark(#f7f4ef, #0c0a09);
+  --efp-surface: light-dark(#fffdfa, #161210);
+  --efp-surface-2: light-dark(#ede7df, #221b17);
+  --efp-border: light-dark(#dcd2c6, #362b23);
+  --efp-text: light-dark(#1c1511, #f2e9df);
+  --efp-text-muted: light-dark(#6a5b4f, #a99a8b);
+  --efp-accent: light-dark(#ad3a08, #ff8a3d);
+  --efp-on-accent: light-dark(#fffdfa, #1d0c02);
+  --efp-focus: light-dark(#ad3a08, #ffb680);
+
+  /* Practicality tiers: A drop-in, B feature, C showpiece. Cool hues, clear of the accent. */
+  --efp-tier-a: light-dark(#1f7a4d, #6fd6a0);
+  --efp-tier-b: light-dark(#255f9e, #86b8f2);
+  --efp-tier-c: light-dark(#7440a6, #c9a2f2);
+
+  --efp-header-height: 52px;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='auto'] {
+  color-scheme: light dark;
+}
+
+/*
+ * A subtree can be shown as the other kind of page (the effect stage does this, story 2.7): the
+ * tokens are light-dark() values, so they follow whatever colour scheme the element has.
+ */
+[data-page='light'] {
+  color-scheme: light;
+}
+
+[data-page='dark'] {
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--efp-bg);
+  color: var(--efp-text);
+  font: var(--efp-text-m) / 1.5 var(--efp-font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--efp-accent);
+  text-underline-offset: 0.15em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--efp-focus);
+  outline-offset: 2px;
+}
+
+/* Numbers and code: tabular so readouts do not jitter as they update. */
+.efp-data {
+  font-family: var(--efp-font-mono);
+  font-size: var(--efp-text-s);
+  font-variant-numeric: tabular-nums;
+}
+
+.efp-muted {
+  color: var(--efp-text-muted);
+}
+
+.efp-label {
+  color: var(--efp-text-muted);
+  font-size: var(--efp-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.efp-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--efp-space-2);
+  min-height: 32px;
+  padding: 0 var(--efp-space-3);
+  border: 1px solid var(--efp-border);
+  border-radius: var(--efp-radius-m);
+  background: var(--efp-surface);
+  color: var(--efp-text);
+  font: inherit;
+  font-size: var(--efp-text-s);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.efp-button:hover {
+  background: var(--efp-surface-2);
+}
+
+.efp-button[aria-pressed='true'],
+.efp-button--primary {
+  border-color: var(--efp-accent);
+  background: var(--efp-accent);
+  color: var(--efp-on-accent);
+}
+
+.efp-button--quiet {
+  border-color: transparent;
+  background: transparent;
+}
+
+.efp-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 var(--efp-space-2);
+  border: 1px solid var(--efp-border);
+  border-radius: 999px;
+  color: var(--efp-text-muted);
+  font-size: var(--efp-text-xs);
+  white-space: nowrap;
+}
+
+/* Tier chips: add data-tier="A" | "B" | "C". */
+.efp-chip[data-tier] {
+  border-color: currentColor;
+  font-weight: 600;
+}
+
+.efp-chip[data-tier='A'] {
+  color: var(--efp-tier-a);
+}
+
+.efp-chip[data-tier='B'] {
+  color: var(--efp-tier-b);
+}
+
+.efp-chip[data-tier='C'] {
+  color: var(--efp-tier-c);
+}
+
+.efp-panel {
+  border: 1px solid var(--efp-border);
+  border-radius: var(--efp-radius-l);
+  background: var(--efp-surface);
+}
+
+.efp-tabs {
+  display: flex;
+  gap: var(--efp-space-4);
+  border-bottom: 1px solid var(--efp-border);
+}
+
+.efp-tab {
+  margin-bottom: -1px;
+  padding: var(--efp-space-2) 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--efp-text-muted);
+  font: inherit;
+  font-size: var(--efp-text-s);
+  cursor: pointer;
+}
+
+.efp-tab[aria-selected='true'] {
+  border-bottom-color: var(--efp-accent);
+  color: var(--efp-text);
+}
+
+/* Long-form text: write-ups and notes. */
+.efp-prose {
+  max-width: 68ch;
+  line-height: 1.65;
+}
+
+.efp-prose > * + * {
+  margin-top: var(--efp-space-4);
+}
+
+.efp-prose h2 {
+  margin-top: var(--efp-space-5);
+  font-size: var(--efp-text-l);
+}
+
+.efp-prose h3 {
+  font-size: var(--efp-text-m);
+}
+
+.efp-prose code {
+  padding: 0.1em 0.3em;
+  border-radius: var(--efp-radius-s);
+  background: var(--efp-surface-2);
+  font-family: var(--efp-font-mono);
+  font-size: 0.9em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

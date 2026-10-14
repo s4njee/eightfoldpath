@@ -1,0 +1,15 @@
+node_modules
+dist
+/lib/
+/types/
+*.local
+.DS_Store
+output
+.env
+
+# Raw generator output (art/) stays local: it is about 200 MB of variations, rejected models and
+# reference renders. The cleaned versions live in assets/, and the logs below record how every
+# raw file was made, so the selection can be audited.
+/art/**
+!/art/generation-log.json
+!/art/selected.json
