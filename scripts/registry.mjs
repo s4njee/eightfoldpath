@@ -39,17 +39,26 @@ for (const id of ids)
   lines.push(`  '${id}': () => import('./${id}/index.ts').then((module) => module.effect),`);
 lines.push('};');
 lines.push('');
-// The art each effect loads: every file under assets/ imported by a module in its directory,
-// counted once (story 2.5, shown on the scorecard).
+// The art each effect loads: every file under assets/ imported by a module in its directory, or
+// by a module those import from another effect's directory (a shared scene), counted once (story
+// 2.5, shown on the scorecard).
 const assetImport = /from\s+'([^']*assets\/[^'?]+)(\?[^']*)?'/g;
+const effectImport = /from\s+'(\.\.\/[^'/.][^'/]*\/[^'?]+\.ts)'/g;
 lines.push('/** Bytes of art each effect imports from assets/. */');
 lines.push('export const assetBytes: Readonly<Record<string, number>> = {');
 for (const id of ids) {
   const files = new Set();
-  for (const name of readdirSync(`${dir}/${id}`).filter((file) => file.endsWith('.ts'))) {
-    const source = readFileSync(`${dir}/${id}/${name}`, 'utf8');
-    for (const match of source.matchAll(assetImport)) {
-      files.add(normalize(join(dirname(`${dir}/${id}/${name}`), match[1])));
+  const modules = readdirSync(`${dir}/${id}`)
+    .filter((file) => file.endsWith('.ts'))
+    .map((name) => `${dir}/${id}/${name}`);
+  for (const module of [...modules]) {
+    for (const match of readFileSync(module, 'utf8').matchAll(effectImport)) {
+      modules.push(normalize(join(dirname(module), match[1])));
+    }
+  }
+  for (const module of modules) {
+    for (const match of readFileSync(module, 'utf8').matchAll(assetImport)) {
+      files.add(normalize(join(dirname(module), match[1])));
     }
   }
   const bytes = [...files].reduce((total, file) => total + statSync(file).size, 0);

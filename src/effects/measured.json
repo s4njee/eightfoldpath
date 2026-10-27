@@ -1,1 +1,79 @@
-{}
+{
+  "bitmap-text": {
+    "bundleKb": 21.7
+  },
+  "camera-rig": {
+    "gpuMs": [
+      {
+        "device": "Apple M1 Max",
+        "deviceClass": "apple-silicon",
+        "method": "marginal",
+        "ms": 1.16
+      }
+    ],
+    "bundleKb": 50.2
+  },
+  "diorama": {
+    "gpuMs": [
+      {
+        "device": "Apple M1 Max",
+        "deviceClass": "apple-silicon",
+        "method": "marginal",
+        "ms": 1.16
+      }
+    ],
+    "bundleKb": 49.6
+  },
+  "hello": {
+    "bundleKb": 28.4
+  },
+  "low-res-path": {
+    "bundleKb": 35
+  },
+  "outlines": {
+    "bundleKb": 41.5
+  },
+  "palette-cycling": {
+    "bundleKb": 24.6
+  },
+  "palette-mapping": {
+    "bundleKb": 28.6
+  },
+  "parallax-header": {
+    "bundleKb": 29.9,
+    "gpuMs": [
+      {
+        "device": "Apple M1 Max",
+        "deviceClass": "apple-silicon",
+        "method": "marginal",
+        "ms": 0.63
+      }
+    ]
+  },
+  "sprite-batch": {
+    "bundleKb": 31.5
+  },
+  "sprite-lighting": {
+    "bundleKb": 37.7
+  },
+  "sprite-shadows": {
+    "bundleKb": 40.3
+  },
+  "texel-lighting": {
+    "bundleKb": 35.3
+  },
+  "texel-sampling": {
+    "bundleKb": 36.5
+  },
+  "tilt-shift": {
+    "bundleKb": 57.3,
+    "gpuMs": [
+      {
+        "device": "Apple M1 Max",
+        "deviceClass": "apple-silicon",
+        "method": "marginal",
+        "ms": 1.73
+      }
+    ]
+  }
+}

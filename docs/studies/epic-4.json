@@ -1,0 +1,478 @@
+{
+  "epic": "4",
+  "measuredAt": "2026-10-27T21:56:19.511Z",
+  "device": "Apple M1 Max",
+  "deviceClass": "apple-silicon",
+  "adapter": {
+    "vendor": "apple",
+    "architecture": "metal-3",
+    "device": "apple-m1-max",
+    "description": "Metal driver on macOS Version 26.6.2 (Build 25G83)"
+  },
+  "runtime": "Dawn (node webgpu bindings)",
+  "method": {
+    "metric": "GPU timestamps: frame span (first pass start to last pass end) and marginal cost per extra frame",
+    "warmupFrames": 12,
+    "rounds": 11,
+    "repeats": 4
+  },
+  "note": "Only this adapter was measured. spanMs includes the timing floor (see the \"(floor)\" rows); slopeMs is the cost of one more frame of the same work and is the number to compare by. A slope at or below zero means the work is below what this method can resolve.",
+  "rows": [
+    {
+      "effect": "(floor)",
+      "config": "one constant-colour pass",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 0.065536,
+      "slopeMs": 0.065536,
+      "slopeMinMs": 0.04369066666666666,
+      "slopeMaxMs": 0.08738133333333335,
+      "passes": 1,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "(tail)",
+      "config": "constant scene + bloom + output",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 0.720896,
+      "slopeMs": 0.6772053333333332,
+      "slopeMinMs": 0.6553599999999999,
+      "slopeMaxMs": 0.7208960000000001,
+      "passes": 11,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "camera-rig",
+      "config": "default",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 1.245184,
+      "slopeMs": 1.1578026666666668,
+      "slopeMinMs": 1.1359573333333335,
+      "slopeMaxMs": 1.179648,
+      "passes": 12,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "camera-rig",
+      "config": "preset explore",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 1.245184,
+      "slopeMs": 1.1578026666666668,
+      "slopeMinMs": 1.1359573333333335,
+      "slopeMaxMs": 1.179648,
+      "passes": 12,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "camera-rig",
+      "config": "preset guided tour",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 1.245184,
+      "slopeMs": 1.1578026666666668,
+      "slopeMinMs": 1.1578026666666668,
+      "slopeMaxMs": 1.179648,
+      "passes": 12,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "camera-rig",
+      "config": "preset scroll story",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 1.245184,
+      "slopeMs": 1.1578026666666668,
+      "slopeMinMs": 1.1359573333333335,
+      "slopeMaxMs": 1.179648,
+      "passes": 12,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "camera-rig",
+      "config": "preset orthographic",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 1.245184,
+      "slopeMs": 1.1578026666666668,
+      "slopeMinMs": 1.1578026666666668,
+      "slopeMaxMs": 1.179648,
+      "passes": 12,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "camera-rig",
+      "config": "preset no parallax",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 1.245184,
+      "slopeMs": 1.1578026666666668,
+      "slopeMinMs": 1.1359573333333335,
+      "slopeMaxMs": 1.179648,
+      "passes": 12,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "diorama",
+      "config": "default",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 1.245184,
+      "slopeMs": 1.1578026666666668,
+      "slopeMinMs": 1.1359573333333335,
+      "slopeMaxMs": 1.179648,
+      "passes": 12,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "diorama",
+      "config": "preset afternoon",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 1.245184,
+      "slopeMs": 1.1578026666666668,
+      "slopeMinMs": 1.1578026666666668,
+      "slopeMaxMs": 1.179648,
+      "passes": 12,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "diorama",
+      "config": "preset evening",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 1.245184,
+      "slopeMs": 1.1578026666666668,
+      "slopeMinMs": 1.1359573333333335,
+      "slopeMaxMs": 1.2014933333333333,
+      "passes": 12,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "diorama",
+      "config": "preset top down",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 0.65536,
+      "slopeMs": 0.6553599999999999,
+      "slopeMinMs": 0.45875200000000005,
+      "slopeMaxMs": 1.245184,
+      "passes": 12,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "diorama",
+      "config": "preset hard seams",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 1.179648,
+      "slopeMs": 1.1359573333333335,
+      "slopeMinMs": 0.7208960000000001,
+      "slopeMaxMs": 1.179648,
+      "passes": 12,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "diorama",
+      "config": "preset no sun",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 0.98304,
+      "slopeMs": 0.9175040000000001,
+      "slopeMinMs": 0.9175040000000001,
+      "slopeMaxMs": 0.9175040000000001,
+      "passes": 11,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "diorama",
+      "config": "shadows=false",
+      "width": 1920,
+      "height": 1080,
+      "params": {
+        "shadows": false
+      },
+      "spanMs": 0.98304,
+      "slopeMs": 0.9175040000000001,
+      "slopeMinMs": 0.9175040000000001,
+      "slopeMaxMs": 0.9393493333333334,
+      "passes": 11,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "diorama",
+      "config": "lamps=false",
+      "width": 1920,
+      "height": 1080,
+      "params": {
+        "lamps": false
+      },
+      "spanMs": 0.589824,
+      "slopeMs": 0.5461333333333332,
+      "slopeMinMs": 0.4805973333333333,
+      "slopeMaxMs": 0.6990506666666666,
+      "passes": 12,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "camera-rig",
+      "config": "projection=perspective",
+      "width": 1920,
+      "height": 1080,
+      "params": {
+        "projection": "perspective"
+      },
+      "spanMs": 1.245184,
+      "slopeMs": 1.1578026666666668,
+      "slopeMinMs": 1.1359573333333333,
+      "slopeMaxMs": 1.2014933333333335,
+      "passes": 12,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "camera-rig",
+      "config": "projection=orthographic",
+      "width": 1920,
+      "height": 1080,
+      "params": {
+        "projection": "orthographic"
+      },
+      "spanMs": 1.245184,
+      "slopeMs": 1.1578026666666668,
+      "slopeMinMs": 1.1578026666666668,
+      "slopeMaxMs": 1.2014933333333333,
+      "passes": 12,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "(floor)",
+      "config": "one constant-colour pass",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0.065536,
+      "slopeMs": 0.043690666666666676,
+      "slopeMinMs": 0.043690666666666676,
+      "slopeMaxMs": 0.08738133333333332,
+      "passes": 1,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "(tail)",
+      "config": "constant scene + bloom + output",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0.524288,
+      "slopeMs": 0.3713706666666667,
+      "slopeMinMs": 0.3495253333333334,
+      "slopeMaxMs": 0.4150613333333333,
+      "passes": 9,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "camera-rig",
+      "config": "default",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0.65536,
+      "slopeMs": 0.589824,
+      "slopeMinMs": 0.5679786666666667,
+      "slopeMaxMs": 0.589824,
+      "passes": 10,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "camera-rig",
+      "config": "preset explore",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0.65536,
+      "slopeMs": 0.589824,
+      "slopeMinMs": 0.5679786666666667,
+      "slopeMaxMs": 0.6116693333333334,
+      "passes": 10,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "camera-rig",
+      "config": "preset guided tour",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0.65536,
+      "slopeMs": 0.589824,
+      "slopeMinMs": 0.5679786666666667,
+      "slopeMaxMs": 0.589824,
+      "passes": 10,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "camera-rig",
+      "config": "preset scroll story",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0.65536,
+      "slopeMs": 0.589824,
+      "slopeMinMs": 0.5679786666666667,
+      "slopeMaxMs": 0.6116693333333334,
+      "passes": 10,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "camera-rig",
+      "config": "preset orthographic",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0.65536,
+      "slopeMs": 0.589824,
+      "slopeMinMs": 0.5679786666666667,
+      "slopeMaxMs": 0.6116693333333334,
+      "passes": 10,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "camera-rig",
+      "config": "preset no parallax",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0.65536,
+      "slopeMs": 0.589824,
+      "slopeMinMs": 0.5679786666666667,
+      "slopeMaxMs": 0.6116693333333334,
+      "passes": 10,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "diorama",
+      "config": "default",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0.65536,
+      "slopeMs": 0.589824,
+      "slopeMinMs": 0.5679786666666667,
+      "slopeMaxMs": 0.6116693333333333,
+      "passes": 10,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "diorama",
+      "config": "preset afternoon",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0.65536,
+      "slopeMs": 0.589824,
+      "slopeMinMs": 0.5461333333333334,
+      "slopeMaxMs": 0.6116693333333334,
+      "passes": 10,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "diorama",
+      "config": "preset evening",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0.65536,
+      "slopeMs": 0.589824,
+      "slopeMinMs": 0.5679786666666667,
+      "slopeMaxMs": 0.589824,
+      "passes": 10,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "diorama",
+      "config": "preset top down",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0.65536,
+      "slopeMs": 0.6116693333333334,
+      "slopeMinMs": 0.589824,
+      "slopeMaxMs": 0.6116693333333334,
+      "passes": 10,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "diorama",
+      "config": "preset hard seams",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0.65536,
+      "slopeMs": 0.589824,
+      "slopeMinMs": 0.5679786666666667,
+      "slopeMaxMs": 0.6116693333333334,
+      "passes": 10,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "diorama",
+      "config": "preset no sun",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0.524288,
+      "slopeMs": 0.458752,
+      "slopeMinMs": 0.4369066666666666,
+      "slopeMaxMs": 0.4805973333333333,
+      "passes": 9,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "diorama",
+      "config": "shadows=false",
+      "width": 1266,
+      "height": 585,
+      "params": {
+        "shadows": false
+      },
+      "spanMs": 0.524288,
+      "slopeMs": 0.458752,
+      "slopeMinMs": 0.4369066666666666,
+      "slopeMaxMs": 0.4805973333333333,
+      "passes": 9,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "diorama",
+      "config": "lamps=false",
+      "width": 1266,
+      "height": 585,
+      "params": {
+        "lamps": false
+      },
+      "spanMs": 0.65536,
+      "slopeMs": 0.5461333333333332,
+      "slopeMinMs": 0.524288,
+      "slopeMaxMs": 0.5679786666666665,
+      "passes": 10,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "camera-rig",
+      "config": "projection=perspective",
+      "width": 1266,
+      "height": 585,
+      "params": {
+        "projection": "perspective"
+      },
+      "spanMs": 0.65536,
+      "slopeMs": 0.589824,
+      "slopeMinMs": 0.5461333333333334,
+      "slopeMaxMs": 0.589824,
+      "passes": 10,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "camera-rig",
+      "config": "projection=orthographic",
+      "width": 1266,
+      "height": 585,
+      "params": {
+        "projection": "orthographic"
+      },
+      "spanMs": 0.65536,
+      "slopeMs": 0.589824,
+      "slopeMinMs": 0.5679786666666666,
+      "slopeMaxMs": 0.6116693333333334,
+      "passes": 10,
+      "metric": "gpu-timestamp"
+    }
+  ]
+}

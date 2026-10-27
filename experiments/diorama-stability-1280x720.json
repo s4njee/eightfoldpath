@@ -1,0 +1,22 @@
+[
+  {
+    "case": "default camera, fast sway",
+    "pop": 2.241,
+    "popReference": 2.173
+  },
+  {
+    "case": "top down, fast sway",
+    "pop": 3.347,
+    "popReference": 3.25
+  },
+  {
+    "case": "rig tour, perspective",
+    "pop": 17.426,
+    "popReference": 17.687
+  },
+  {
+    "case": "rig tour, orthographic",
+    "pop": 19.554,
+    "popReference": 19.881
+  }
+]

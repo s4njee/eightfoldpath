@@ -7,9 +7,13 @@ in the same family as [Fire Temple](https://github.com/s4njee/firetemple) and
 [holofx](https://github.com/s4njee/holofx) collection.
 
 Every effect gets a live demo, readable source, a write-up and a practicality scorecard. The plan
-is in [plan.md](plan.md). Epics 1 to 3 are done: the foundation, the research UI and the pixel-art building blocks.
+is in [plan.md](plan.md). Epics 1 to 3 are done (the foundation, the research UI and the pixel-art
+building blocks), and so is the rest of M0, the vertical slice: a scene format written by hand, a
+tile extruder and a camera rig (`diorama`, `camera-rig`), a tilt-shift lens (`tilt-shift`) and a
+parallax header (`parallax-header`). The one M0 item left is story 1.4's test through HoloGPU's
+`createEffect`, which waits on that package being published.
 
-![hello: one lit sprite on one tile](src/effects/hello/poster.webp)
+![tilt-shift: the village diorama through the depth lens](src/effects/tilt-shift/poster.webp)
 
 ## Run it
 
@@ -55,11 +59,13 @@ AI-generation metadata is kept in every image. See [CREDITS.md](CREDITS.md).
 ## Layout
 
 ```
-assets/          cleaned art, the palette and manifest.json
+assets/          cleaned art, the palette, hand-written scenes (scenes/) and manifest.json
 src/effects/     one directory per effect: meta.ts, index.ts, *.wgsl, notes.md, poster.webp
-src/gpu/         re-exports of @mk7s/hologpu-temple-core, plus assets.ts (image loading, texture arrays)
+src/gpu/         re-exports of @mk7s/hologpu-temple-core, plus assets.ts (image loading, texture arrays),
+                 sprites/ (the batcher), diorama/ (scenes, terrain, camera rig, lit stage) and lens/
+                 (tilt-shift, layer depth of field, light shafts)
 src/shell/       the gallery, copied from Fire Temple
 src/lib/         the library entry: createEffectHost and mount
 tests/           Vitest on Dawn's Node bindings: real WebGPU, no browser
-docs/            the support-matrix delta and the write-up template
+docs/            the support-matrix delta, the write-up template and the cost studies (studies/)
 ```

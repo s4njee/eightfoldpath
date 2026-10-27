@@ -47,18 +47,22 @@ export const STUDY_SWEEPS: Readonly<Record<string, readonly StudyConfig[]>> = {
     ...sweep('volume-march', 'upsample', ['bilinear', 'depth-aware'], { resolution: '1/2' }),
   ],
   '4': [
-    // 4.8: does a grid of small flames cost more as it fills up?
-    ...sweep('torch', 'count', [1, 4, 12, 24, 48]),
-    // 4.9: sparks should not cost more as they get denser.
-    ...sweep('sparks', 'layers', [1, 2, 3, 4]),
+    // 4.2 and the stage: what the shadow pass, the lamps and the sprites each cost.
+    { effect: 'diorama', name: 'shadows=false', params: { shadows: false } },
+    { effect: 'diorama', name: 'lamps=false', params: { lamps: false } },
+    // 4.3: orthographic against perspective, and the tour (a moving camera).
+    ...sweep('camera-rig', 'projection', ['perspective', 'orthographic']),
   ],
   '5': [
-    // 5.9: grid resolution against frame time, and render pass against compute.
-    ...sweep('doom-fire', 'resolution', [48, 96, 192, 256], { backend: 'render' }),
-    ...sweep('doom-fire', 'resolution', [48, 96, 192, 256], { backend: 'compute' }),
-    ...sweep('burn-front', 'resolution', [64, 128, 256, 512]),
-    ...sweep('forest-fire', 'resolution', [48, 90, 180, 360]),
-    ...sweep('combustion-front', 'grid', [192, 256, 384, 512]),
+    // 5.1: the lens alone (off is the scene without it), each method, and how blur size scales.
+    ...sweep('tilt-shift', 'method', ['off', 'screen', 'depth']),
+    ...sweep('tilt-shift', 'maxBlur', [0.75, 1.5, 3, 4]),
+    { effect: 'tilt-shift', name: 'msaa=false', params: { msaa: false } },
+  ],
+  '9': [
+    // 9.4: the shafts alone, and the depth of field (which should cost nothing per frame).
+    { effect: 'parallax-header', name: 'shafts=0', params: { shafts: 0 } },
+    { effect: 'parallax-header', name: 'aperture=0', params: { aperture: 0 } },
   ],
   '6': [
     // 6.10: velocity grid against frame time, and what the pressure solve costs.

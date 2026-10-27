@@ -626,6 +626,11 @@
       "licence": "Generated with Meshy on a paid plan. Under Meshy's terms (section 3.2) paid-plan output is owned by the customer to the extent possible under applicable law; redistributed here under this repository's MIT licence. See CREDITS.md.",
       "palette": null,
       "note": "About 30,000 triangles, remeshed by Meshy and textured from art/reference/town-square-texref.png."
+    },
+    "scenes/village.json": {
+      "kind": "scene",
+      "source": "written by hand for this repository (story 4.1)",
+      "licence": "MIT (this repository)"
     }
   }
 }

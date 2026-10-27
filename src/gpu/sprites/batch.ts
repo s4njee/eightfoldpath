@@ -153,7 +153,12 @@ export function createSpriteBatch(device: GPUDevice, options: SpriteBatchOptions
   const resourceLayout = device.createBindGroupLayout({
     label: `${label} resources`,
     entries: [
-      { binding: 0, visibility: GPUShaderStage.VERTEX, buffer: { type: 'read-only-storage' } },
+      // Fragment too: a shade chunk may read its sprite's entry (src/gpu/diorama/shade.wgsl).
+      {
+        binding: 0,
+        visibility: GPUShaderStage.VERTEX | GPUShaderStage.FRAGMENT,
+        buffer: { type: 'read-only-storage' },
+      },
       { binding: 1, visibility: GPUShaderStage.FRAGMENT, texture: { viewDimension: '2d-array' } },
       { binding: 2, visibility: GPUShaderStage.FRAGMENT, sampler: {} },
       { binding: 3, visibility: GPUShaderStage.FRAGMENT, texture: { viewDimension: '2d-array' } },

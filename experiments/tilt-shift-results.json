@@ -1,0 +1,103 @@
+{
+  "note": "Timings taken while other agents shared the GPU; treat them as indicative only.",
+  "timing": "gpu-timestamp",
+  "maxBlurPx": 8.1,
+  "agreement": {
+    "size": "960x540",
+    "depthSettings": {
+      "method": "depth",
+      "focusDistance": 30,
+      "focusBand": 3,
+      "nearTransition": 5,
+      "farTransition": 10,
+      "maxBlur": 0.015,
+      "line": 0.5,
+      "lineBand": 0.06,
+      "lineTransition": 0.3
+    },
+    "defaults": {
+      "method": "depth",
+      "focusDistance": 30,
+      "focusBand": 3,
+      "nearTransition": 5,
+      "farTransition": 10,
+      "maxBlur": 0.015,
+      "line": 0.5,
+      "lineBand": 0.06,
+      "lineTransition": 0.3,
+      "ground": {
+        "blocks": 81047,
+        "meanErrorPx": 2.03,
+        "wrongBy2px": 0.42,
+        "inFocusButBlurred": 0.457,
+        "blurredButSharp": 0
+      },
+      "upright": {
+        "blocks": 48552,
+        "meanErrorPx": 2.73,
+        "wrongBy2px": 0.58,
+        "inFocusButBlurred": 0.456,
+        "blurredButSharp": 0.193
+      }
+    },
+    "fittedToGround": {
+      "line": 0.62,
+      "lineBand": 0.1,
+      "lineTransition": 0.375,
+      "ground": {
+        "blocks": 81047,
+        "meanErrorPx": 0.1,
+        "wrongBy2px": 0,
+        "inFocusButBlurred": 0,
+        "blurredButSharp": 0
+      },
+      "upright": {
+        "blocks": 48552,
+        "meanErrorPx": 3.8,
+        "wrongBy2px": 0.748,
+        "inFocusButBlurred": 0.641,
+        "blurredButSharp": 0.536
+      }
+    },
+    "fittedToAll": {
+      "line": 0.62,
+      "lineBand": 0.08,
+      "lineTransition": 0.4,
+      "ground": {
+        "blocks": 81047,
+        "meanErrorPx": 0.1,
+        "wrongBy2px": 0,
+        "inFocusButBlurred": 0,
+        "blurredButSharp": 0
+      },
+      "upright": {
+        "blocks": 48552,
+        "meanErrorPx": 3.78,
+        "wrongBy2px": 0.754,
+        "inFocusButBlurred": 0.686,
+        "blurredButSharp": 0.489
+      }
+    }
+  },
+  "cost1080p": {
+    "depth": {
+      "lensMs": 1.027,
+      "lensRangeMs": [
+        0.983,
+        1.092
+      ],
+      "sceneAndLensMs": 1.398,
+      "passes": 6
+    },
+    "screen": {
+      "lensMs": 0.175,
+      "lensRangeMs": [
+        0.153,
+        0.262
+      ],
+      "sceneAndLensMs": 0.655,
+      "passes": 4
+    },
+    "sceneOnlyMs": 0.568
+  }
+}

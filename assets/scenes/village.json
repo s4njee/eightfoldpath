@@ -1,0 +1,77 @@
+{
+  "name": "Village terraces",
+  "heightStep": 0.5,
+  "base": -1,
+  "legend": {
+    "g": { "top": "grass", "side": "cliff" },
+    "d": { "top": "dirt-path", "side": "cliff" },
+    "c": { "top": "cobblestone", "side": "stone-wall" },
+    "w": { "top": "sand", "side": "cliff" },
+    "s": { "top": "cobblestone", "side": "stone-wall", "shape": "stairs" },
+    "r": { "top": "dirt-path", "side": "cliff", "shape": "slope" }
+  },
+  "map": [
+    "ggggggggggddgggggggggggg",
+    "ggggggggggddgggggggggggg",
+    "ggggggggggddgggggggggggg",
+    "ggggggggggddgggggggggggg",
+    "ggggggggggssgggggggggggg",
+    "ggggggggggssgggggggggggg",
+    "ggggggggggddgggggggggggg",
+    "ggggggggggddgggggggggggg",
+    "gggggccccccccccccggggggg",
+    "gggggccccccccccccggggggg",
+    "gggggccccccccccccggggggg",
+    "gggggccccccccccccggggggg",
+    "ggrrgggggggggssggggggggg",
+    "ggrrgggggggggddggggggggg",
+    "wwwwwwwwwwwwwrrwwwwwwwww",
+    "wwwwwwwwwwwwwddwwwwwwwww"
+  ],
+  "heights": [
+    "888888888888888888888888",
+    "888888888888888888888888",
+    "888888888888888888888888",
+    "888888888888888888888888",
+    "444444444466444444444444",
+    "444444444444444444444444",
+    "444444444444444444444444",
+    "444444444444444444444444",
+    "444444444444444444444444",
+    "444444444455444444444444",
+    "444444444455444444444444",
+    "444444444444444444444444",
+    "223322222222222222222222",
+    "222222222222222222222222",
+    "111111111111111111111111",
+    "111111111111111111111111"
+  ],
+  "camera": { "focus": [12, 2, 8.5], "yaw": 0.18, "pitch": 35, "fov": 25, "distance": 52 },
+  "lights": {
+    "sun": { "elevation": 38, "azimuth": 0.75, "color": [1, 0.9, 0.74], "intensity": 1.25 },
+    "sky": [0.3, 0.36, 0.52],
+    "ground": [0.12, 0.1, 0.07],
+    "points": [
+      { "at": [9.1, 4.7, 8.5], "color": [1, 0.62, 0.3], "intensity": 3, "range": 5 },
+      { "at": [12.9, 4.7, 8.5], "color": [1, 0.62, 0.3], "intensity": 3, "range": 5 }
+    ]
+  },
+  "glow": { "lantern": 5 },
+  "sprites": [
+    { "art": "tree", "at": [3.2, 1.6] },
+    { "art": "tree", "at": [19.5, 2.2], "flipX": true },
+    { "art": "tree", "at": [21.6, 6.4] },
+    { "art": "tree", "at": [1.6, 6.8], "flipX": true },
+    { "art": "lantern", "at": [9.1, 8.5] },
+    { "art": "lantern", "at": [12.9, 8.5], "flipX": true },
+    { "art": "chest", "at": [11, 10] },
+    { "art": "mage", "at": [7.4, 9.6] },
+    { "art": "knight", "at": [15.4, 10.5], "flipX": true },
+    { "art": "barrel", "at": [16.3, 8.6] },
+    { "art": "barrel", "at": [5.6, 11.4] },
+    { "art": "traveller", "at": [14, 13.3] },
+    { "art": "slime", "at": [6.2, 13.4] },
+    { "art": "boulder", "at": [20.6, 13] },
+    { "art": "crystals", "at": [21.6, 10.4] }
+  ]
+}

@@ -414,5 +414,12 @@ for (const r of results) {
     `${r.entry.to.padEnd(34)} ${size.padEnd(10)} ${r.grid ? `cell ${r.grid.cell.toFixed(2)}` : ''}`,
   );
 }
+// Scenes are written by hand (story 4.1), not cleaned from art/, so their entries carry over.
+if (existsSync('assets/manifest.json')) {
+  const previous = JSON.parse(readFileSync('assets/manifest.json', 'utf8'));
+  for (const [file, entry] of Object.entries(previous.files ?? {})) {
+    if (entry.kind === 'scene') manifest.files[file] = entry;
+  }
+}
 writeFileSync('assets/manifest.json', JSON.stringify(manifest, null, 2) + '\n');
 console.log(`\n${results.length} assets, ${palette.length}-colour palette.`);

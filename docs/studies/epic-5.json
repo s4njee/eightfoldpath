@@ -1,0 +1,502 @@
+{
+  "epic": "5",
+  "measuredAt": "2026-10-27T21:56:25.682Z",
+  "device": "Apple M1 Max",
+  "deviceClass": "apple-silicon",
+  "adapter": {
+    "vendor": "apple",
+    "architecture": "metal-3",
+    "device": "apple-m1-max",
+    "description": "Metal driver on macOS Version 26.6.2 (Build 25G83)"
+  },
+  "runtime": "Dawn (node webgpu bindings)",
+  "method": {
+    "metric": "GPU timestamps: frame span (first pass start to last pass end) and marginal cost per extra frame",
+    "warmupFrames": 12,
+    "rounds": 11,
+    "repeats": 4
+  },
+  "note": "Only this adapter was measured. spanMs includes the timing floor (see the \"(floor)\" rows); slopeMs is the cost of one more frame of the same work and is the number to compare by. A slope at or below zero means the work is below what this method can resolve.",
+  "rows": [
+    {
+      "effect": "(floor)",
+      "config": "one constant-colour pass",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 0.065536,
+      "slopeMs": 0.065536,
+      "slopeMinMs": 0.021845333333333338,
+      "slopeMaxMs": 0.08738133333333335,
+      "passes": 1,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "(tail)",
+      "config": "constant scene + bloom + output",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 0.524288,
+      "slopeMs": 0.3713706666666667,
+      "slopeMinMs": 0.3495253333333334,
+      "slopeMaxMs": 0.6772053333333332,
+      "passes": 11,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "default",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 1.835008,
+      "slopeMs": 1.7257813333333332,
+      "slopeMinMs": 1.4417920000000002,
+      "slopeMaxMs": 2.2937600000000002,
+      "passes": 18,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "preset screen fallback",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 1.376256,
+      "slopeMs": 1.2888746666666668,
+      "slopeMinMs": 1.0704213333333332,
+      "slopeMaxMs": 1.7694720000000002,
+      "passes": 16,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "preset shallow miniature",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 1.703936,
+      "slopeMs": 1.7257813333333332,
+      "slopeMinMs": 1.2233386666666668,
+      "slopeMaxMs": 2.8835840000000004,
+      "passes": 18,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "preset focus far",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 1.769472,
+      "slopeMs": 1.572864,
+      "slopeMinMs": 1.2014933333333333,
+      "slopeMaxMs": 1.9879253333333333,
+      "passes": 18,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "preset focus near",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 1.769472,
+      "slopeMs": 1.7694720000000002,
+      "slopeMinMs": 1.3544106666666664,
+      "slopeMaxMs": 1.8786986666666667,
+      "passes": 18,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "preset deep focus",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 1.6384,
+      "slopeMs": 1.5947093333333333,
+      "slopeMinMs": 1.376256,
+      "slopeMaxMs": 2.9709653333333335,
+      "passes": 18,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "preset no lens",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 1.179648,
+      "slopeMs": 1.1141119999999998,
+      "slopeMinMs": 0.7645866666666667,
+      "slopeMaxMs": 1.1578026666666668,
+      "passes": 12,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "preset single-sampled depth",
+      "width": 1920,
+      "height": 1080,
+      "spanMs": 1.835008,
+      "slopeMs": 1.8568533333333332,
+      "slopeMinMs": 1.4636373333333335,
+      "slopeMaxMs": 2.6651306666666668,
+      "passes": 18,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "method=off",
+      "width": 1920,
+      "height": 1080,
+      "params": {
+        "method": "off"
+      },
+      "spanMs": 0.98304,
+      "slopeMs": 0.9393493333333334,
+      "slopeMinMs": 0.6990506666666666,
+      "slopeMaxMs": 1.1359573333333335,
+      "passes": 12,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "method=screen",
+      "width": 1920,
+      "height": 1080,
+      "params": {
+        "method": "screen"
+      },
+      "spanMs": 0.851968,
+      "slopeMs": 0.8738133333333332,
+      "slopeMinMs": 0.5679786666666666,
+      "slopeMaxMs": 1.6602453333333334,
+      "passes": 16,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "method=depth",
+      "width": 1920,
+      "height": 1080,
+      "params": {
+        "method": "depth"
+      },
+      "spanMs": 1.507328,
+      "slopeMs": 1.5947093333333333,
+      "slopeMinMs": 1.0267306666666665,
+      "slopeMaxMs": 2.3156053333333335,
+      "passes": 18,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "maxBlur=0.75",
+      "width": 1920,
+      "height": 1080,
+      "params": {
+        "maxBlur": 0.75
+      },
+      "spanMs": 1.769472,
+      "slopeMs": 1.6820906666666666,
+      "slopeMinMs": 1.2670293333333333,
+      "slopeMaxMs": 2.0753066666666666,
+      "passes": 18,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "maxBlur=1.5",
+      "width": 1920,
+      "height": 1080,
+      "params": {
+        "maxBlur": 1.5
+      },
+      "spanMs": 1.6384,
+      "slopeMs": 1.6602453333333334,
+      "slopeMinMs": 1.2888746666666666,
+      "slopeMaxMs": 2.0753066666666666,
+      "passes": 18,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "maxBlur=3",
+      "width": 1920,
+      "height": 1080,
+      "params": {
+        "maxBlur": 3
+      },
+      "spanMs": 1.900544,
+      "slopeMs": 1.8131626666666667,
+      "slopeMinMs": 1.3544106666666667,
+      "slopeMaxMs": 2.118997333333333,
+      "passes": 18,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "maxBlur=4",
+      "width": 1920,
+      "height": 1080,
+      "params": {
+        "maxBlur": 4
+      },
+      "spanMs": 1.572864,
+      "slopeMs": 1.5510186666666668,
+      "slopeMinMs": 0.9830399999999999,
+      "slopeMaxMs": 3.0365013333333333,
+      "passes": 18,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "msaa=false",
+      "width": 1920,
+      "height": 1080,
+      "params": {
+        "msaa": false
+      },
+      "spanMs": 1.507328,
+      "slopeMs": 1.5291733333333333,
+      "slopeMinMs": 1.3325653333333332,
+      "slopeMaxMs": 1.7694719999999997,
+      "passes": 18,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "(floor)",
+      "config": "one constant-colour pass",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0,
+      "slopeMs": 0.065536,
+      "slopeMinMs": 0.02184533333333333,
+      "slopeMaxMs": 0.08738133333333332,
+      "passes": 1,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "(tail)",
+      "config": "constant scene + bloom + output",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0.458752,
+      "slopeMs": 0.30583466666666664,
+      "slopeMinMs": 0.262144,
+      "slopeMaxMs": 0.3713706666666667,
+      "passes": 9,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "default",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 1.703936,
+      "slopeMs": 1.6383999999999999,
+      "slopeMinMs": 1.179648,
+      "slopeMaxMs": 1.835008,
+      "passes": 16,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "preset screen fallback",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0.851968,
+      "slopeMs": 0.786432,
+      "slopeMinMs": 0.7645866666666666,
+      "slopeMaxMs": 0.786432,
+      "passes": 14,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "preset shallow miniature",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0.98304,
+      "slopeMs": 0.98304,
+      "slopeMinMs": 0.8082773333333333,
+      "slopeMaxMs": 1.8568533333333335,
+      "passes": 16,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "preset focus far",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 1.114112,
+      "slopeMs": 1.1359573333333335,
+      "slopeMinMs": 0.8738133333333334,
+      "slopeMaxMs": 2.1408426666666664,
+      "passes": 16,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "preset focus near",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 1.507328,
+      "slopeMs": 1.245184,
+      "slopeMinMs": 0.6772053333333332,
+      "slopeMaxMs": 1.8131626666666667,
+      "passes": 16,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "preset deep focus",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 1.507328,
+      "slopeMs": 1.5728639999999998,
+      "slopeMinMs": 1.0267306666666667,
+      "slopeMaxMs": 1.8786986666666667,
+      "passes": 16,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "preset no lens",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0.65536,
+      "slopeMs": 0.5679786666666667,
+      "slopeMinMs": 0.5679786666666667,
+      "slopeMaxMs": 0.589824,
+      "passes": 10,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "preset single-sampled depth",
+      "width": 1266,
+      "height": 585,
+      "spanMs": 0.98304,
+      "slopeMs": 0.9830399999999999,
+      "slopeMinMs": 0.5679786666666666,
+      "slopeMaxMs": 1.7476266666666664,
+      "passes": 16,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "method=off",
+      "width": 1266,
+      "height": 585,
+      "params": {
+        "method": "off"
+      },
+      "spanMs": 0.524288,
+      "slopeMs": 0.45875200000000005,
+      "slopeMinMs": 0.3495253333333334,
+      "slopeMaxMs": 0.589824,
+      "passes": 10,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "method=screen",
+      "width": 1266,
+      "height": 585,
+      "params": {
+        "method": "screen"
+      },
+      "spanMs": 0.851968,
+      "slopeMs": 0.786432,
+      "slopeMinMs": 0.7645866666666666,
+      "slopeMaxMs": 0.786432,
+      "passes": 14,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "method=depth",
+      "width": 1266,
+      "height": 585,
+      "params": {
+        "method": "depth"
+      },
+      "spanMs": 1.572864,
+      "slopeMs": 1.6383999999999999,
+      "slopeMinMs": 1.0704213333333332,
+      "slopeMaxMs": 1.8568533333333335,
+      "passes": 16,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "maxBlur=0.75",
+      "width": 1266,
+      "height": 585,
+      "params": {
+        "maxBlur": 0.75
+      },
+      "spanMs": 0.98304,
+      "slopeMs": 0.98304,
+      "slopeMinMs": 0.6116693333333334,
+      "slopeMaxMs": 1.8131626666666667,
+      "passes": 16,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "maxBlur=1.5",
+      "width": 1266,
+      "height": 585,
+      "params": {
+        "maxBlur": 1.5
+      },
+      "spanMs": 1.703936,
+      "slopeMs": 1.6602453333333331,
+      "slopeMinMs": 1.3325653333333332,
+      "slopeMaxMs": 1.8350080000000002,
+      "passes": 16,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "maxBlur=3",
+      "width": 1266,
+      "height": 585,
+      "params": {
+        "maxBlur": 3
+      },
+      "spanMs": 0.98304,
+      "slopeMs": 0.98304,
+      "slopeMinMs": 0.589824,
+      "slopeMaxMs": 1.835008,
+      "passes": 16,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "maxBlur=4",
+      "width": 1266,
+      "height": 585,
+      "params": {
+        "maxBlur": 4
+      },
+      "spanMs": 0.98304,
+      "slopeMs": 0.9611946666666666,
+      "slopeMinMs": 0.6116693333333333,
+      "slopeMaxMs": 1.835008,
+      "passes": 16,
+      "metric": "gpu-timestamp"
+    },
+    {
+      "effect": "tilt-shift",
+      "config": "msaa=false",
+      "width": 1266,
+      "height": 585,
+      "params": {
+        "msaa": false
+      },
+      "spanMs": 1.179648,
+      "slopeMs": 1.419946666666667,
+      "slopeMinMs": 0.6116693333333333,
+      "slopeMaxMs": 1.9660799999999998,
+      "passes": 16,
+      "metric": "gpu-timestamp"
+    }
+  ]
+}
