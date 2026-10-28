@@ -1,6 +1,17 @@
 {
   "bitmap-text": {
-    "bundleKb": 21.7
+    "bundleKb": 22.2
+  },
+  "bokeh-highlights": {
+    "gpuMs": [
+      {
+        "device": "Apple M1 Max",
+        "deviceClass": "apple-silicon",
+        "method": "marginal",
+        "ms": 2.01
+      }
+    ],
+    "bundleKb": 65
   },
   "camera-rig": {
     "gpuMs": [
@@ -11,7 +22,29 @@
         "ms": 1.16
       }
     ],
-    "bundleKb": 50.2
+    "bundleKb": 51
+  },
+  "colour-grading": {
+    "gpuMs": [
+      {
+        "device": "Apple M1 Max",
+        "deviceClass": "apple-silicon",
+        "method": "marginal",
+        "ms": 0.59
+      }
+    ],
+    "bundleKb": 63.5
+  },
+  "dialogue-box": {
+    "bundleKb": 30.3,
+    "gpuMs": [
+      {
+        "device": "Apple M1 Max",
+        "deviceClass": "apple-silicon",
+        "method": "marginal",
+        "ms": 0.37
+      }
+    ]
   },
   "diorama": {
     "gpuMs": [
@@ -22,57 +55,134 @@
         "ms": 1.16
       }
     ],
-    "bundleKb": 49.6
+    "bundleKb": 50.4
   },
-  "hello": {
-    "bundleKb": 28.4
-  },
-  "low-res-path": {
-    "bundleKb": 35
-  },
-  "outlines": {
-    "bundleKb": 41.5
-  },
-  "palette-cycling": {
-    "bundleKb": 24.6
-  },
-  "palette-mapping": {
-    "bundleKb": 28.6
-  },
-  "parallax-header": {
-    "bundleKb": 29.9,
+  "finishing": {
     "gpuMs": [
       {
         "device": "Apple M1 Max",
         "deviceClass": "apple-silicon",
         "method": "marginal",
-        "ms": 0.63
+        "ms": 0.87
+      }
+    ],
+    "bundleKb": 63
+  },
+  "hello": {
+    "bundleKb": 28.5
+  },
+  "hero-diorama": {
+    "bundleKb": 72.5,
+    "gpuMs": [
+      {
+        "device": "Apple M1 Max",
+        "deviceClass": "apple-silicon",
+        "method": "marginal",
+        "ms": 1.68
       }
     ]
   },
-  "sprite-batch": {
-    "bundleKb": 31.5
+  "low-res-path": {
+    "bundleKb": 35.2
   },
-  "sprite-lighting": {
-    "bundleKb": 37.7
-  },
-  "sprite-shadows": {
-    "bundleKb": 40.3
-  },
-  "texel-lighting": {
-    "bundleKb": 35.3
-  },
-  "texel-sampling": {
-    "bundleKb": 36.5
-  },
-  "tilt-shift": {
-    "bundleKb": 57.3,
+  "menu-windows": {
+    "bundleKb": 66,
     "gpuMs": [
       {
         "device": "Apple M1 Max",
         "deviceClass": "apple-silicon",
         "method": "marginal",
-        "ms": 1.73
+        "ms": 0.5
+      }
+    ]
+  },
+  "outlines": {
+    "bundleKb": 41.6
+  },
+  "palette-cycling": {
+    "bundleKb": 24.7
+  },
+  "palette-mapping": {
+    "bundleKb": 29.5
+  },
+  "parallax-header": {
+    "bundleKb": 30,
+    "gpuMs": [
+      {
+        "device": "Apple M1 Max",
+        "deviceClass": "apple-silicon",
+        "method": "marginal",
+        "ms": 1.14
+      }
+    ]
+  },
+  "pixel-bloom": {
+    "gpuMs": [
+      {
+        "device": "Apple M1 Max",
+        "deviceClass": "apple-silicon",
+        "method": "marginal",
+        "ms": 1.09
+      }
+    ],
+    "bundleKb": 62.9
+  },
+  "pixelate-hover": {
+    "bundleKb": 27.9,
+    "gpuMs": [
+      {
+        "device": "Apple M1 Max",
+        "deviceClass": "apple-silicon",
+        "method": "marginal",
+        "ms": 0.22
+      }
+    ]
+  },
+  "pointer-lit-sprite": {
+    "bundleKb": 34.9,
+    "gpuMs": [
+      {
+        "device": "Apple M1 Max",
+        "deviceClass": "apple-silicon",
+        "method": "marginal",
+        "ms": 0.17
+      }
+    ]
+  },
+  "rack-focus": {
+    "gpuMs": [
+      {
+        "device": "Apple M1 Max",
+        "deviceClass": "apple-silicon",
+        "method": "marginal",
+        "ms": 1.7
+      }
+    ],
+    "bundleKb": 60.5
+  },
+  "sprite-batch": {
+    "bundleKb": 31.7
+  },
+  "sprite-lighting": {
+    "bundleKb": 38.5
+  },
+  "sprite-shadows": {
+    "bundleKb": 41.1
+  },
+  "texel-lighting": {
+    "bundleKb": 35.5
+  },
+  "texel-sampling": {
+    "bundleKb": 36.7
+  },
+  "tilt-shift": {
+    "bundleKb": 59.1,
+    "gpuMs": [
+      {
+        "device": "Apple M1 Max",
+        "deviceClass": "apple-silicon",
+        "method": "marginal",
+        "ms": 1.68
       }
     ]
   }

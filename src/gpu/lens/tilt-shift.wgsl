@@ -1,6 +1,7 @@
 #include "fullscreen.wgsl"
 #include "tilt-shift-params.wgsl"
 #include "tilt-shift-depth.wgsl"
+#include "bokeh-excess.wgsl"
 
 // The tilt-shift lens (story 5.1): two ways of blurring a diorama so it reads as a miniature.
 //
@@ -9,7 +10,9 @@
 //
 //   ts_prefilter  half resolution: the colour averaged over each 2 x 2 block, and the block's signed
 //                 circle of confusion (full-resolution pixels, negative in front of focus), taken
-//                 from the nearest of its four pixels so a foreground edge never thins away.
+//                 from the nearest of its four pixels so a foreground edge never thins away. With a
+//                 bokeh threshold, a blurred block's light above it is held back (bokeh-excess.wgsl)
+//                 for the bokeh pass to draw as a shaped disc (story 5.2).
 //   ts_spread     half resolution: each texel's colour spread over the cell one tap of its own ring
 //                 kernel stands for. Without it a small bright lantern in a large blur is picked up
 //                 only by the taps that land on it and draws the kernel's rings instead of a disc.
@@ -125,7 +128,11 @@ fn coc_colour(coc: f32, sharp: vec3f) -> vec4f {
       nearest = min(nearest, distance_at(p));
     }
   }
-  return vec4f(sum * 0.25, coc_from_distance(nearest));
+  let colour = sum * 0.25;
+  let coc = coc_from_distance(nearest);
+  // The bokeh pass finds the same blocks and draws exactly this light, so none is counted twice.
+  let held = select(vec3f(0.0), bokeh_excess(colour, params.bokeh_threshold), bokeh_held(coc));
+  return vec4f(colour - held, coc);
 }
 
 // ---- depth: spread ---------------------------------------------------------------------------

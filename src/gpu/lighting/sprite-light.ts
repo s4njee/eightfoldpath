@@ -4,18 +4,20 @@
  *   const shade = spriteLightShade(myShadeWgsl);   // sprite-light.wgsl helpers + your sprite_shade
  *   createSpriteBatch(device, { sheets, normals, shade, shadeLayout, ... });
  *
- * The helpers in src/wgsl/sprite-light.wgsl read the batcher's normal map in the quad's own frame,
- * attenuate point lights to a range, add a rim and quantise light into bands. They are pasted in
- * front of the effect's chunk because the batcher compiles its shade from a string.
+ * The helpers in src/wgsl/sprite-light.wgsl read the batcher's normal map in the quad's own frame;
+ * those in src/wgsl/sprite-light-common.wgsl attenuate point lights to a range, add a rim and
+ * quantise light into bands. Both are pasted in front of the effect's chunk because the batcher
+ * compiles its shade from a string. A fullscreen pass can `#include "sprite-light-common.wgsl"`.
  */
 import type { Pixels } from '../assets.ts';
+import common from '../../wgsl/sprite-light-common.wgsl?raw';
 import helpers from '../../wgsl/sprite-light.wgsl?raw';
 
 export { distanceToEdge, flatNormals, heightFromAlpha, normalsFromAlpha } from './normals.ts';
 
 /** A shade chunk for `createSpriteBatch`: the lighting helpers, then `body`. */
 export function spriteLightShade(body: string): string {
-  return `${helpers}\n${body}`;
+  return `${common}\n${helpers}\n${body}`;
 }
 
 const srgbToLinear = (byte: number) => {

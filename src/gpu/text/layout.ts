@@ -40,7 +40,8 @@ export interface LayoutOptions {
   pauses?: boolean;
 }
 
-const PAUSES: Readonly<Record<string, number>> = {
+/** Extra characters of typewriter time after each punctuation mark. */
+export const PUNCTUATION_PAUSES: Readonly<Record<string, number>> = {
   '.': 6,
   '!': 6,
   '?': 6,
@@ -110,7 +111,7 @@ export function layoutText(
         const glyph = glyphOf(atlas, char);
         glyphs.push({ char, glyph, x, y: row * lineHeight, order: clock });
         x += glyph.advance;
-        clock += 1 + (pauses ? (PAUSES[char] ?? 0) : 0);
+        clock += 1 + (pauses ? (PUNCTUATION_PAUSES[char] ?? 0) : 0);
       }
     });
     widest = Math.max(widest, x > 0 ? x - font.spacing : 0);

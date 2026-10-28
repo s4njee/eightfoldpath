@@ -211,6 +211,7 @@ export interface NineSlice {
 /**
  * Nine quads that draw a frame image at any size: corners as they are, edges and centre repeated.
  * `x`, `y`, `width` and `height` are in texels of the frame; the result is scaled by `scale`.
+ * With `centre` false the middle is left out, so whatever is behind the frame shows through it.
  */
 export function nineSliceQuads(
   frame: NineSlice,
@@ -218,6 +219,7 @@ export function nineSliceQuads(
   rect: readonly [number, number, number, number],
   scale: number,
   tint?: readonly [number, number, number],
+  centre = true,
 ): PixelQuad[] {
   const [left, top, right, bottom] = frame.insets;
   const [x, y, w, h] = rect;
@@ -237,6 +239,7 @@ export function nineSliceQuads(
   for (const [sy, sh, dy, dh] of rows) {
     for (const [sx, sw, dx, dw] of columns) {
       if (dw <= 0 || dh <= 0) continue;
+      if (!centre && sx === left && sy === top) continue;
       quads.push({
         dst: [dx * scale, dy * scale, dw * scale, dh * scale],
         src: [sx, sy, sw, sh],

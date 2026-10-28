@@ -8,10 +8,12 @@ in the same family as [Fire Temple](https://github.com/s4njee/firetemple) and
 
 Every effect gets a live demo, readable source, a write-up and a practicality scorecard. The plan
 is in [plan.md](plan.md). Epics 1 to 3 are done (the foundation, the research UI and the pixel-art
-building blocks), and so is the rest of M0, the vertical slice: a scene format written by hand, a
-tile extruder and a camera rig (`diorama`, `camera-rig`), a tilt-shift lens (`tilt-shift`) and a
-parallax header (`parallax-header`). The one M0 item left is story 1.4's test through HoloGPU's
-`createEffect`, which waits on that package being published.
+building blocks), and so are M0, the vertical slice (a hand-written scene format, a tile extruder,
+a camera rig, a tilt-shift lens and a parallax header), and M1, the drop-in set: shaped bokeh, rack
+focus, bloom tuned for pixel art, colour grading and finishing, and the web components (a hero
+diorama, a pointer-lit avatar, a pixelate-on-hover image, an accessible dialogue box and menu
+windows). The one item left from M0 is story 1.4's test through HoloGPU's `createEffect`, which
+waits on that package being published.
 
 ![tilt-shift: the village diorama through the depth lens](src/effects/tilt-shift/poster.webp)
 
@@ -63,7 +65,8 @@ assets/          cleaned art, the palette, hand-written scenes (scenes/) and man
 src/effects/     one directory per effect: meta.ts, index.ts, *.wgsl, notes.md, poster.webp
 src/gpu/         re-exports of @mk7s/hologpu-temple-core, plus assets.ts (image loading, texture arrays),
                  sprites/ (the batcher), diorama/ (scenes, terrain, camera rig, lit stage) and lens/
-                 (tilt-shift, layer depth of field, light shafts)
+                 (tilt-shift, bokeh, rack focus, layer depth of field, light shafts), post-fx/ (pixel
+                 bloom, grading, finishing) and ui/ (DOM overlays)
 src/shell/       the gallery, copied from Fire Temple
 src/lib/         the library entry: createEffectHost and mount
 tests/           Vitest on Dawn's Node bindings: real WebGPU, no browser

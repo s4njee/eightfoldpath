@@ -24,9 +24,10 @@
  *   resolution. The fallback for compat devices, flat layers and anything without a depth buffer.
  *
  * Everything in `TiltShiftSettings` is read at encode time, so focus can be animated (rack focus,
- * story 5.3) by changing it every frame. `prefiltered` holds the half-resolution colour with each
- * block's signed circle in alpha, which is where bright out-of-focus lights can be found later and
- * drawn as shaped discs (story 5.2).
+ * story 5.3, src/gpu/lens/rack-focus.ts) by changing it every frame. `prefiltered` holds the
+ * half-resolution colour with each block's signed circle in alpha. With `bokehThreshold` set, the
+ * depth method holds the light of blurred highlights back from its gather, and a bokeh pass
+ * (story 5.2, src/gpu/lens/bokeh.ts) draws that light as shaped discs instead.
  */
 import type { Mat4 } from 'wgpu-matrix';
 import { createFullscreenPipeline, renderFullscreen } from '../fullscreen.ts';
@@ -63,6 +64,12 @@ export interface TiltShiftSettings {
   lineTransition: number;
   /** Default `final`. */
   view?: TiltShiftView;
+  /**
+   * depth: luminance above which a blurred block's light is left out of the gather, for a bokeh
+   * pass (src/gpu/lens/bokeh.ts) to draw as a shaped disc; it must be given the same threshold.
+   * Default 0: off, and the lens keeps all the light.
+   */
+  bokehThreshold?: number;
 }
 
 /** A diorama seen from about 25 world units away, with the screen line through the middle. */
@@ -96,7 +103,8 @@ export interface TiltShiftOptions {
 export interface TiltShift {
   /**
    * Half-resolution colour with each block's signed circle of confusion in alpha (full-resolution
-   * pixels, negative in front of focus), as of the last `depth` encode.
+   * pixels, negative in front of focus), as of the last `depth` encode. With `bokehThreshold`, the
+   * colour of a blurred block is what is left once its highlight has been held back.
    */
   readonly prefiltered: RenderTarget;
   /** Called before `encode` whenever the input size changes. */
@@ -181,6 +189,7 @@ const TiltShiftParams = defineUniformStruct('TiltShiftParams', {
   line_band: 'f32',
   line_transition: 'f32',
   view: 'f32',
+  bokeh_threshold: 'f32',
 });
 
 /** How the depth texture is declared and read, by sample count (`textureLoad`'s last argument is
@@ -300,6 +309,7 @@ export function createTiltShift(device: GPUDevice, options: TiltShiftOptions = {
         line_band: settings.lineBand,
         line_transition: settings.lineTransition,
         view: TILT_SHIFT_VIEWS.indexOf(settings.view ?? 'final'),
+        bokeh_threshold: Math.max(settings.bokehThreshold ?? 0, 0),
       });
       uniforms.upload();
       const timing = (pass: string) => ({ timestampWrites: profiler?.pass(`tilt-shift ${pass}`) });

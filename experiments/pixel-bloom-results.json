@@ -1,0 +1,186 @@
+{
+  "radiance": {
+    "dusk": {
+      "emissiveTexels": 521,
+      "emissiveMin": 3.5,
+      "emissiveMedian": 4.78,
+      "litP99": 0.3,
+      "litP999": 0.33,
+      "litMax": 1.06,
+      "litOver1": 0,
+      "litOver1_5": 0,
+      "litOver1_75": 0
+    },
+    "midday": {
+      "emissiveTexels": 521,
+      "emissiveMin": 3.5,
+      "emissiveMedian": 4.78,
+      "litP99": 1.03,
+      "litP999": 1.07,
+      "litMax": 2.02,
+      "litOver1": 0.019,
+      "litOver1_5": 0,
+      "litOver1_75": 5
+    }
+  },
+  "dusk": {
+    "glass pixels": 521,
+    "stock tail (average, thr 1)": {
+      "glow": 73.34,
+      "reachPx": 33,
+      "contrastKept": 0.661,
+      "farChange": 0,
+      "farMovedShare": 0
+    },
+    "lens effects (average, thr 1.5, r .55)": {
+      "glow": 53.6,
+      "reachPx": 23,
+      "contrastKept": 0.767,
+      "farChange": 0,
+      "farMovedShare": 0
+    },
+    "low threshold (average, thr 0.6)": {
+      "glow": 99.19,
+      "reachPx": 38,
+      "contrastKept": 0.612,
+      "farChange": 0.138,
+      "farMovedShare": 0.0392
+    },
+    "average, thr 2, firefly on": {
+      "glow": 59.72,
+      "reachPx": 15,
+      "contrastKept": 0.813,
+      "farChange": 0,
+      "farMovedShare": 0
+    },
+    "average, thr 2, firefly off": {
+      "glow": 63.99,
+      "reachPx": 16,
+      "contrastKept": 0.809,
+      "farChange": 0,
+      "farMovedShare": 0
+    },
+    "average, thr 2, intensity 2.4": {
+      "glow": 117.93,
+      "reachPx": 20,
+      "contrastKept": 0.739,
+      "farChange": 0,
+      "farMovedShare": 0
+    },
+    "texel, thr 2 (pixel bloom)": {
+      "glow": 106.8,
+      "reachPx": 18,
+      "contrastKept": 0.779,
+      "farChange": 0,
+      "farMovedShare": 0
+    },
+    "texel, thr 2, firefly on": {
+      "glow": 100.32,
+      "reachPx": 17,
+      "contrastKept": 0.783,
+      "farChange": 0,
+      "farMovedShare": 0
+    },
+    "texel, thr 1": {
+      "glow": 124.72,
+      "reachPx": 19,
+      "contrastKept": 0.761,
+      "farChange": 0,
+      "farMovedShare": 0
+    },
+    "texel, thr 2, levels auto, r .7": {
+      "glow": 95.58,
+      "reachPx": 35,
+      "contrastKept": 0.636,
+      "farChange": 0,
+      "farMovedShare": 0
+    },
+    "texel, thr 2, levels -2": {
+      "glow": 109.07,
+      "reachPx": 11,
+      "contrastKept": 0.869,
+      "farChange": 0,
+      "farMovedShare": 0
+    }
+  },
+  "midday": {
+    "glass pixels": 521,
+    "stock tail (average, thr 1)": {
+      "glow": 72.47,
+      "reachPx": 28,
+      "contrastKept": 0.745,
+      "farChange": 0.222,
+      "farMovedShare": 0.0483
+    },
+    "lens effects (average, thr 1.5, r .55)": {
+      "glow": 52.93,
+      "reachPx": 20,
+      "contrastKept": 0.828,
+      "farChange": 0,
+      "farMovedShare": 0
+    },
+    "low threshold (average, thr 0.6)": {
+      "glow": 98.37,
+      "reachPx": 57,
+      "contrastKept": 0.694,
+      "farChange": 1.496,
+      "farMovedShare": 0.2363
+    },
+    "average, thr 2, firefly on": {
+      "glow": 58.99,
+      "reachPx": 15,
+      "contrastKept": 0.858,
+      "farChange": 0,
+      "farMovedShare": 0
+    },
+    "average, thr 2, firefly off": {
+      "glow": 63.23,
+      "reachPx": 15,
+      "contrastKept": 0.855,
+      "farChange": 0,
+      "farMovedShare": 0
+    },
+    "average, thr 2, intensity 2.4": {
+      "glow": 116.81,
+      "reachPx": 19,
+      "contrastKept": 0.791,
+      "farChange": 0,
+      "farMovedShare": 0
+    },
+    "texel, thr 2 (pixel bloom)": {
+      "glow": 105.77,
+      "reachPx": 16,
+      "contrastKept": 0.826,
+      "farChange": 0,
+      "farMovedShare": 0
+    },
+    "texel, thr 2, firefly on": {
+      "glow": 99.36,
+      "reachPx": 16,
+      "contrastKept": 0.83,
+      "farChange": 0,
+      "farMovedShare": 0
+    },
+    "texel, thr 1": {
+      "glow": 123.6,
+      "reachPx": 18,
+      "contrastKept": 0.808,
+      "farChange": 0.298,
+      "farMovedShare": 0.0434
+    },
+    "texel, thr 2, levels auto, r .7": {
+      "glow": 94.58,
+      "reachPx": 30,
+      "contrastKept": 0.723,
+      "farChange": 0,
+      "farMovedShare": 0
+    },
+    "texel, thr 2, levels -2": {
+      "glow": 108.03,
+      "reachPx": 11,
+      "contrastKept": 0.89,
+      "farChange": 0,
+      "farMovedShare": 0
+    }
+  }
+}
